@@ -37,8 +37,8 @@
      writes the real client width into --evo-vw and keeps it current. */
   --vw: var(--evo-vw, 100vw);
   position: relative;
-  margin-left: calc(50% - var(--vw) / 2);
-  margin-right: calc(50% - var(--vw) / 2);
+  margin-left: calc(-1 * var(--evo-left, 0px));
+  margin-right: 0;
   width: var(--vw);
   max-width: var(--vw);
   padding: 0;

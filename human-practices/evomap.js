@@ -601,8 +601,18 @@
   /* 100vw counts the scrollbar; the document's client width does not. */
 
   function vw() {
-    document.documentElement.style.setProperty(
-      "--evo-vw", document.documentElement.clientWidth + "px");
+    var css = document.documentElement.style;
+    css.setProperty("--evo-vw", document.documentElement.clientWidth + "px");
+    var band = root.closest(".sec--evo");
+    if (!band || !band.parentElement) return;
+    /* How far the reading column sits from the left edge of the page. The
+       band pulls itself back by exactly that much, so it starts at the edge
+       whatever the rail is doing. */
+    var prev = band.style.marginLeft;
+    band.style.marginLeft = "0px";
+    var left = band.getBoundingClientRect().left;
+    band.style.marginLeft = prev;
+    css.setProperty("--evo-left", Math.round(left) + "px");
   }
 
   /* ---- the ground fade ---------------------------------------------------- */
