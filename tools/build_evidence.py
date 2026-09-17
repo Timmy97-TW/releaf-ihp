@@ -31,6 +31,14 @@ COPY = {
  "ev-cad-redesign":   "plant/o-260811-cad-redesign.webp",
  "ev-soil-pots":      "plant/p-260822-soil-pots.webp",
  "ev-electroporation":"engineering/lab-260517-electroporation.webp",
+ "ev-vertical-wrong": "plant/p-260617-wrong-orientation.webp",
+ "ev-contamination":  "plant/p-260617-contamination.webp",
+ "ev-heat-panel":     "plant/fig-heat-day4-panel.webp",
+ "ev-scoring-bench":  "plant/p-260822-scoring-bench.webp",
+ "ev-growth-chamber": "plant/p-260829-growth-chamber.webp",
+ "ev-gel-accd":       "engineering/gel-260722-level1-accd.webp",
+ "ev-gel-acdi":       "engineering/gel-260901-level2-acdi-junctions.webp",
+ "ev-gel-lea":        "engineering/gel-260725-level1-lea.webp",
 }
 COPY_RAW = {   # jpg/png on the wiki, re-encoded below
  "ev-pressure-live":  "software/first-live-pressure-20260712.jpg",
@@ -61,6 +69,27 @@ BANKMAP = {
  "ev-reactor-case":   "2026-08/Drylab/W37  8-16-8-23/20260823_Photo_BioreactorInComputerCaseBuilding3.jpg",
  "ev-yuanxian-cad":   "2026-08/Drylab/W36  8-9-8-16/20260811_Drylab_Photo_Outreach_源先智慧農場_DrylabStudentsChangingDesignsOfHardwareOnComputerCADMeasuringMetrics.png",
  "ev-forum-prep":     "2026-08/HP/W38  8_23-8_30/20260829_HP_Photo_Presentation prep.jpg",
+ "ev-vertical-start": "20260616_Wetlab_Photo_StartOfVerticalAgarPlate.jpg",
+ "ev-averra-poster":  "20260410_HP_Figure_AVERRA2025iGEMstartupposter_陳文亮Meetingmentioned_ProjectPivot.jpg",
+ "ev-first-hardware": "20260418_Drylab_Figure_1stHardwareDesign.jpg",
+ "ev-lab-safety":     "20260822_Wetlab_Photo_LabSafetyBSC.jpg",
+ "ev-kyle-inspect":   "20260531_Wetlab_Photo_Instructor_PlantPhDAdvisor_Kyle_LabInspection.jpg",
+ "ev-chang-visit2":   "20260618_General_Photo_ProfChang_BioreactorImportantDiscussion_Suggestion_Imporatnt2.jpg",
+ "ev-plant-transplant": "20260804_Wetlab_Photo_LabWorkStudentVeryFocusedOnPlantTransplanting_GreatPhoto.jpg",
+ "ev-plate-inspect":  "20260822_Wetlab_Photo_StudentsInspectingPlate.jpg",
+ "ev-chbio-group":    "20260709_HP_Photo_正瀚Outreach_GroupPhotoWithResearcher.jpg",
+ "ev-bioasia-reactor":"20260718_HP_Photo_ExpoBioAsiaTaiwanBoothWithCoolBioreactorSetup.jpg",
+ "ev-nchu-gate":      "20260806_HP_Photo_Outreach_NCHU黃介成_GroupPhotoAtDepartmentGate.jpg",
+ "ev-nchu-office":    "20260806_HP_Photo_Outreach_NCHU黃介成_GroupPhotoInProfessorsOffice.jpg",
+ "ev-reactor-assembly": "20260829_bioreactor_assembly_4.jpg",
+ "ev-reactor-case2":  "20260823_Photo_BioreactorInComputerCaseBuilding6.jpg",
+}
+SYMP = ROOT / "wiki/human-practices/Pictures /Expert Engagement/9:11 poster symposium photo"
+EXTRA = {
+ "ev-symp-rehearsal": SYMP / "PosterPic1.jpg",
+ "ev-symp-poster":    SYMP / "PosterPic2.jpg",
+ "ev-symp-explain":   SYMP / "PosterPic3.jpg",
+ "ev-symp-award":     SYMP / "PosterPic4.png",
 }
 def encode(src, slug, width=1400, q=80):
     tmp = OUT / (slug + ".tmp.png")
@@ -78,10 +107,24 @@ for slug, rel in COPY_RAW.items():
     src = WIKI / rel
     if src.exists(): encode(src, slug)
     else: missing.append(rel)
+def find(rel):
+    direct = BANK / rel
+    if direct.exists():
+        return direct
+    hits = list(BANK.rglob(pathlib.Path(rel).name))
+    return hits[0] if hits else None
+
 for slug, rel in BANKMAP.items():
-    src = BANK / rel
-    if src.exists(): encode(src, slug)
+    if (OUT / (slug + ".webp")).exists():
+        continue
+    src = find(rel)
+    if src: encode(src, slug)
     else: missing.append(rel)
+for slug, src in EXTRA.items():
+    if (OUT / (slug + ".webp")).exists():
+        continue
+    if src.exists(): encode(src, slug)
+    else: missing.append(str(src))
 if missing:
     print("MISSING:", *missing, sep="\n  ", file=sys.stderr)
 print("evidence done")
