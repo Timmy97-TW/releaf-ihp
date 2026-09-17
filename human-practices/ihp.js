@@ -89,9 +89,52 @@
     update();
   }
 
+  /* ---- 3. short labels in the contents rail ------------------------------ */
+  /* page.js builds the rail from the heading text. Our headings are long,
+     deliberately: each one is a claim, not a category. A rail of claims is a
+     rail you have to scroll, so the rail gets the short name instead. Every
+     heading carries data-toc; the evolution map's heading is owned by
+     evomap.js, so its label lives in the fallback below, keyed on section id.
+     The number span page.js renders stays where it is.                      */
+
+  var SECTION_LABEL = { evolution: "Evolution map" };
+
+  function shortenToc() {
+    var list = $(".toc__list");
+    if (!list) return false;
+
+    var links = $$("a", list);
+    if (!links.length) return false;
+
+    links.forEach(function (a) {
+      var id = a.getAttribute("href").slice(1);
+      var h;
+      try { h = document.getElementById(id); } catch (e) { return; }
+      if (!h) return;
+
+      var sec = h.closest(".sec");
+      var label = h.dataset.toc || (sec && SECTION_LABEL[sec.id]);
+      if (!label) return;
+
+      /* keep the "3.2" page.js put at the front of the link text */
+      var no = (a.textContent.match(/^\s*([\d.]+)\s/) || [])[1];
+      a.textContent = (no ? no + " " : "") + label;
+      a.title = h.textContent.replace(/¶$/, "").replace(/^[\d.]+\s*/, "").trim();
+    });
+    return true;
+  }
+
   function start() {
     $$("[data-rail]").forEach(rail);
     $$("[data-carousel]").forEach(carousel);
+
+    /* This file is loaded after page.js, so the rail is already there. If the
+       load order is ever changed back, watch for it rather than give up.     */
+    if (shortenToc()) return;
+    var toc = $(".toc");
+    if (!toc || !window.MutationObserver) return;
+    var mo = new MutationObserver(function () { if (shortenToc()) mo.disconnect(); });
+    mo.observe(toc, { childList: true, subtree: true });
   }
 
   if (document.readyState === "loading") {

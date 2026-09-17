@@ -56,11 +56,12 @@
 
       <!-- ====================================================== 1 · OVERVIEW == -->
       <section class="sec" id="overview">
-        <h2>Overview: the people we met moved the bacteria off the field and into a box</h2>
+        <h2 data-toc="Overview">Overview: the people we met moved the bacteria off the field and into a box</h2>
         <p class="stand">ReLeaf began as engineered <i>Bacillus subtilis</i> sprayed onto crops. It ends as a sealed hollow-fibre bioreactor that keeps the cells inside and sends only the protectant to the plant. <b>Nearly every step between those two designs traces back to a named conversation.</b></p>
 
         <p>Farmers in Taiwan lose crops to heat, salt, drought, pests and weather they cannot predict, and many answer with more chemical input because it is the fastest thing to hand. We set out to predict stress and protect the plant before the damage lands, without adding to that load. The question we kept putting to other people was whether our answer was safe, useful and wanted. Plant biologists changed our model organism and our dosing. Two Stanford researchers and a bioprocess engineer changed how we contain the bacteria. An AIoT professor changed how the hardware, the model and the data relate to each other. A natural farmer in Tamsui changed what we built for farmers. We went back to seven of these stakeholders with results in hand, because a second conversation tests whether we understood the first. Iterating with the same stakeholders is what set apart Calgary 2019 and Lambert 2021, the two examples in the judging handbook we modelled our approach on [1][2][3]. Every entry below records what the person said, what we did about it, and where the result sits on this wiki, including the advice we could not act on yet.</p>
 
+        <div class="keyfacts-wrap">
         <ul class="keyfacts">
           <li><b>25</b><span>Dated engagements, 19 March to 12 September</span></li>
           <li><b>7</b><span>Stakeholders we met two or three times</span></li>
@@ -68,6 +69,7 @@
           <li><b>50+</b><span>Participants at our 5 September forum</span></li>
           <li><b>62</b><span>Visitor surveys from the market booths</span></li>
         </ul>
+        </div>
 
         <aside class="callout callout--medal">
           <b class="callout__label">Silver Medal Criterion #2 &middot; Best Integrated Human Practices</b>
@@ -76,70 +78,103 @@
       </section>
 
       <!-- ======================================================= 2 · MAP == -->
-      <section class="sec" id="evolution">
-        <h2>Project evolution map: six lanes, twenty-five engagements, seven return loops</h2>
-        <p class="stand">Each lane is one part of the project. A meeting that changed a lane leaves a mark on it; <b>arcs join the same stakeholder's repeat visits</b>, and dashed arcs follow one conversation into the next. Select any engagement to see what we did before and after it.</p>
+      <!-- ===================================================== 2 · MAP ==
+           The evolution map is a full-bleed dark band. Everything inside
+           #evomap is rendered by evomap.js from evomap-data.js; this block is
+           owned by the map and should not be edited by hand. -->
+      <section class="sec sec--evo" id="evolution">
+        <h2 data-toc="Evolution map">Project evolution map: the road from a spray to a sealed reactor</h2>
+        <p class="stand">Twenty-five conversations, six project areas, and the decision that followed each one. <b>Seven stakeholders came back for a second look</b>, and their return visits are marked on the road.</p>
 
         <div id="evomap" class="evomap" data-evomap>
           <noscript>
-            <p>The interactive map needs JavaScript. Every engagement it shows is also described in sections 3 to 5 below, with dates, advice and the change that followed.</p>
+            <p>The interactive roadmap needs JavaScript. Every engagement it shows is also described in sections 3 to 5 below, with dates, advice and the change that followed.</p>
           </noscript>
         </div>
       </section>
 
       <!-- ============================================ 3 · EXPERT ENGAGEMENT == -->
       <section class="sec" id="experts">
-        <h2>Expert engagement: advisors who checked our work twice</h2>
+        <h2 data-toc="Expert engagement">Expert engagement: advisors who checked our work twice</h2>
         <p class="stand">We chose each expert for the part of the project they could find faults in, and <b>went back to the ones whose advice we had acted on</b> so they could judge whether we had acted on it well.</p>
 
-        <h3>We picked experts by the module they could break</h3>
+        <h3 data-toc="Choosing experts">We picked experts by the module they could break</h3>
         <p>We could not ask one person everything, so we split the project into the six areas the map uses and looked for someone who could find the weak point in each. Academic advisors came first, while the design was still open to change. Industry and farm-technology contacts came later, once there was a device to criticise.</p>
 
-        <div class="tablewrap">
-          <table class="ledger">
-            <thead><tr><th>Area</th><th>Who we asked</th><th>Why them</th><th>What changed</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="ledger__area">Plant model</td>
-                <td class="ledger__who"><span>Prof. Cheng Mei-Chun (鄭梅君)<small>National Taiwan University</small></span><span>Dr. Paul Verslues<small>Academia Sinica</small></span><span>Dr. Lin (林維怡)<small>plant stress biology</small></span><span>Dr. Kyle<small>weekly, from June</small></span></td>
-                <td>Plant stress physiologists who grow <i>Arabidopsis</i> under salt and drought every day.</td>
-                <td><i>Medicago</i> became <i>Arabidopsis</i>; hydroponics stopped being the main system; plates came first, then soil; salt capped and then lowered to 150&nbsp;mM. <a href="../plant/">Plants</a></td>
-              </tr>
-              <tr>
-                <td class="ledger__area">Circuit &amp; cloning</td>
-                <td class="ledger__who"><span>Prof. Huang (黃介辰)<small>National Chung Hsing University</small></span></td>
-                <td>Works on <i>Bacillus</i> genetics, which is where our cloning kept stalling.</td>
-                <td>His view that recombination in <i>Bacillus</i> was not our problem sent module&nbsp;4's terminator back to B0015. <a href="../engineering/">Engineering</a></td>
-              </tr>
-              <tr>
-                <td class="ledger__area">Protectant</td>
-                <td class="ledger__who"><span>Dr. Elizabeth Sattely<small>Stanford University</small></span><span>CH Biotech (正瀚生技)<small>biostimulant company</small></span><span>Prof. Huang (黃姿碧)<small>National Chung Hsing University</small></span></td>
-                <td>Plant biochemistry at research level, plus a company that registers biostimulants in Taiwan.</td>
-                <td>We test the purified protectant on plants before building it into the reactor, and moved toward short peptides. <a href="../peptide-design/">Peptide design</a></td>
-              </tr>
-              <tr>
-                <td class="ledger__area">Bioreactor &amp; biosafety</td>
-                <td class="ledger__who"><span>Dr. Jennifer Brophy<small>Stanford University</small></span><span>Prof. Chang Jo-Shu (張嘉修)<small>bioprocess engineering</small></span></td>
-                <td>A plant synthetic biologist who has weighed kill switches, and a bioprocess engineer who runs membrane reactors.</td>
-                <td>Physical containment became the primary safety layer, and a hollow-fibre membrane holds the cells. <a href="../hardware/">Hardware</a></td>
-              </tr>
-              <tr>
-                <td class="ledger__area">Modelling &amp; AIoT</td>
-                <td class="ledger__who"><span>Prof. Chen Wen-liang (陳文亮)<small>smart agriculture, founder of Agritalk</small></span></td>
-                <td>Builds sensor systems that farmers actually run.</td>
-                <td>Hardware as the printer, protectant as the ink; the model now takes wet-lab data back in. <a href="../bioreactor-calculations/">Bioreactor calculations</a></td>
-              </tr>
-              <tr>
-                <td class="ledger__area">Deployment</td>
-                <td class="ledger__who"><span>World Vegetable Center</span><span>Yes Health iFarm (源鮮智慧農場)</span><span>BIO Asia-Taiwan &middot; SMART Agriweek</span><span>Green Media (綠媒體)</span><span>Farmers at markets and our forum</span></td>
-                <td>People who sell to, fund or talk to farmers for a living.</td>
-                <td>Positioning, regulation research, oxygen monitoring, and the format of our forum. <a href="../entrepreneurship/">Entrepreneurship</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ol class="picks">
+          <li>
+            <p class="picks__area">Plant model</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>Prof. Cheng Mei-Chun (鄭梅君) <span>National Taiwan University</span></li>
+                <li>Dr. Paul Verslues <span>Academia Sinica</span></li>
+                <li>Dr. Lin (林維怡) <span>plant stress biology</span></li>
+                <li>Dr. Kyle <span>weekly, from June</span></li>
+              </ul>
+              <p class="picks__why">Plant stress physiologists who grow <i>Arabidopsis</i> under salt and drought every day.</p>
+              <p class="picks__did"><b>Changed</b> <i>Medicago</i> became <i>Arabidopsis</i>; hydroponics stopped being the main system; plates came first, then soil; salt capped and then lowered to 150&nbsp;mM. <a href="../plant/">Plants</a></p>
+            </div>
+          </li>
+          <li>
+            <p class="picks__area">Circuit &amp; cloning</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>Prof. Huang (黃介辰) <span>National Chung Hsing University</span></li>
+              </ul>
+              <p class="picks__why">Works on <i>Bacillus</i> genetics, which is where our cloning kept stalling.</p>
+              <p class="picks__did"><b>Changed</b> His view that recombination in <i>Bacillus</i> was not our problem sent module&nbsp;4's terminator back to B0015. <a href="../engineering/">Engineering</a></p>
+            </div>
+          </li>
+          <li>
+            <p class="picks__area">Protectant</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>Dr. Elizabeth Sattely <span>Stanford University</span></li>
+                <li>CH Biotech (正瀚生技) <span>biostimulant company</span></li>
+                <li>Prof. Huang (黃姿碧) <span>National Chung Hsing University</span></li>
+              </ul>
+              <p class="picks__why">Plant biochemistry at research level, plus a company that registers biostimulants in Taiwan.</p>
+              <p class="picks__did"><b>Changed</b> We test the purified protectant on plants before building it into the reactor, and moved toward short peptides. <a href="../peptide-design/">Peptide design</a></p>
+            </div>
+          </li>
+          <li>
+            <p class="picks__area">Bioreactor &amp; biosafety</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>Dr. Jennifer Brophy <span>Stanford University</span></li>
+                <li>Prof. Chang Jo-Shu (張嘉修) <span>bioprocess engineering</span></li>
+              </ul>
+              <p class="picks__why">A plant synthetic biologist who has weighed kill switches, and a bioprocess engineer who runs membrane reactors.</p>
+              <p class="picks__did"><b>Changed</b> Physical containment became the primary safety layer, and a hollow-fibre membrane holds the cells. <a href="../hardware/">Hardware</a></p>
+            </div>
+          </li>
+          <li>
+            <p class="picks__area">Modelling &amp; AIoT</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>Prof. Chen Wen-liang (陳文亮) <span>smart agriculture, founder of Agritalk</span></li>
+              </ul>
+              <p class="picks__why">Builds sensor systems that farmers actually run.</p>
+              <p class="picks__did"><b>Changed</b> Hardware as the printer, protectant as the ink; the model now takes wet-lab data back in. <a href="../bioreactor-calculations/">Bioreactor calculations</a></p>
+            </div>
+          </li>
+          <li>
+            <p class="picks__area">Deployment</p>
+            <div class="picks__body">
+              <ul class="picks__who">
+                <li>World Vegetable Center</li>
+                <li>Yes Health iFarm (源鮮智慧農場)</li>
+                <li>BIO Asia-Taiwan &middot; SMART Agriweek</li>
+                <li>Green Media (綠媒體)</li>
+                <li>Farmers at markets and our forum</li>
+              </ul>
+              <p class="picks__why">People who sell to, fund or talk to farmers for a living.</p>
+              <p class="picks__did"><b>Changed</b> Positioning, regulation research, oxygen monitoring, and the format of our forum. <a href="../entrepreneurship/">Entrepreneurship</a></p>
+            </div>
+          </li>
+        </ol>
 
-        <h3>Six advisors saw the project twice, and the second meeting went deeper</h3>
+        <h3 data-toc="Return visits">Six advisors saw the project twice, and the second meeting went deeper</h3>
         <p>A single interview tells you what someone thinks of an idea. A second interview tells you what they think of what you did with their advice. Six of those threads are below; CH Biotech and Green Media also came back to us, and their second appearance was at our forum, in section&nbsp;5. Each tab below sets the first meeting, the work in between and the return meeting side by side. The line at the bottom of each tab says what the second meeting asked of us that the first could not.</p>
 
         <div class="rail" data-rail>
@@ -382,7 +417,7 @@
           </div>
         </div>
 
-        <h3>Two early warnings about the kill switch made containment physical</h3>
+        <h3 data-toc="Kill switch">Two early warnings about the kill switch made containment physical</h3>
         <div class="split">
           <div>
             <p>In March our biosafety plan was a genetic kill switch on bacteria that would live in the field. Dr. Lin asked whether we needed one at all. In April Dr. Brophy set out the problem: kill switches can mutate away, so containment should rest on hardware, and the cells should sit in a closed vessel that only the protectant can leave. Prof. Chen had already pushed us from soil release toward a bioreactor the week before.</p>
@@ -394,7 +429,7 @@
           </figure>
         </div>
 
-        <h3>Where advisors disagreed, we wrote down whose advice we followed</h3>
+        <h3 data-toc="Where they disagreed">Where advisors disagreed, we wrote down whose advice we followed</h3>
         <div class="changed">
           <div class="changed__row">
             <div class="changed__who">Soil salt schedule<small>Verslues vs Cheng</small></div>
@@ -416,7 +451,7 @@
           </div>
         </div>
 
-        <h3>Industry and farm-technology visits tested the idea against a market</h3>
+        <h3 data-toc="Industry visits">Industry and farm-technology visits tested the idea against a market</h3>
         <ul class="cells">
           <li>
             <h4>World Vegetable Center<small>22 May</small></h4>
@@ -473,10 +508,10 @@
 
       <!-- ============================================ 4 · FARMER ENGAGEMENT == -->
       <section class="sec" id="farmers">
-        <h2>Farmer engagement: growers named the problems, and one of them named a tool we then built</h2>
+        <h2 data-toc="Farmer engagement">Farmer engagement: growers named the problems, and one of them named a tool we then built</h2>
         <p class="stand">Experts told us how to grow a plant. <b>Growers told us what a stressed crop costs them</b>, what they distrust about technology, and how they look for help.</p>
 
-        <h3>At the Farmer Expo, weather and water came before salt</h3>
+        <h3 data-toc="Farmer Expo">At the Farmer Expo, weather and water came before salt</h3>
         <div class="split">
           <div>
             <p>On 16 May we interviewed smallholder stallholders at the 花博農民市集 farmers' market in Taipei. We asked what goes wrong in their fields before saying what we were building. Salt was not the first thing anyone mentioned. They named pests, pathogen infections, water shortage and unpredictable weather, and then the cost of everything you might spray to fix them. Several were wary of technology on the farm, and those concerns went into our business plan.</p>
@@ -488,7 +523,7 @@
           </figure>
         </div>
 
-        <h3>A natural farmer in Tamsui warned us against giving plants too much</h3>
+        <h3 data-toc="Tamsui farm">A natural farmer in Tamsui warned us against giving plants too much</h3>
         <div class="split">
           <div>
             <p>On 21 July we spent a day on Ms. Chen Hui-wen's (陳惠雯) Happy Farm in Tamsui. We harvested okra and luffa, crouched in the beds while she showed us what she reads in the soil, and ate what we had picked. She farms naturally, and she was sceptical on two counts: whether technology like ours works in a real field, and whether it helps at all.</p>
@@ -527,7 +562,7 @@
           </ul>
         </div>
 
-        <h3>農友助手: a LINE account because farmers already use LINE</h3>
+        <h3 data-toc="LINE platform">農友助手: a LINE account because farmers already use LINE</h3>
         <p>The Expo and the Tamsui visit showed us the same gap. Farm advice exists on government sites, research pages and social media, but it is scattered, and many smallholders are not comfortable searching for it. LINE is on almost every phone in Taiwan, so we built there: an official account called 農友助手 (Farmers' Assistant), with a six-button menu and nothing to install. Each button opens one tool.</p>
 
         <div class="rail" data-rail>
@@ -594,10 +629,10 @@
 
       <!-- ============================================ 5 · PUBLIC ENGAGEMENT == -->
       <section class="sec" id="public">
-        <h2>Public engagement: a forum and six booths put farmers, experts and the public in one conversation</h2>
+        <h2 data-toc="Public engagement">Public engagement: a forum and six booths put farmers, experts and the public in one conversation</h2>
         <p class="stand">On 5 September we held a forum and a market event on the same day. <b>More than fifty people attended the forum, and 62 visitors filled in our booth survey.</b></p>
 
-        <h3>The forum gave farmers, experts and the public the same microphone</h3>
+        <h3 data-toc="The forum">The forum gave farmers, experts and the public the same microphone</h3>
         <p>Most outreach puts a team at the front of a room. Green Media advised us in July that farmers, researchers and media see farming differently. So we built the forum, 田間對話 (Dialogue in the Field), in three parts and made the last part the longest.</p>
 
         <ul class="cells">
@@ -645,19 +680,35 @@
 
         <h4>Each audience got its own survey</h4>
         <p>We wrote a Knowledge, Attitudes and Practices (KAP) survey [5][6], with different questions for speakers, farmers and the public, and an open question at the end for each.</p>
-        <div class="tablewrap">
-          <table class="ledger">
-            <thead><tr><th>Group</th><th>Knowledge</th><th>Attitude</th><th>Practice</th></tr></thead>
-            <tbody>
-              <tr><td class="ledger__area">Speakers</td><td>Did the forum help you understand farmers' needs and challenges?</td><td>Do you agree more strongly that research should consider farmers' practical needs?</td><td>Will you consider farmers' needs in your future research?</td></tr>
-              <tr><td class="ledger__area">Farmers</td><td>Do you understand better how plants respond to environmental stress?</td><td>Are you more willing to accept technology in farming?</td><td>Would you use related technology on your farm?</td></tr>
-              <tr><td class="ledger__area">Public</td><td>Do you understand better how technology applies to farming?</td><td>Are you more aware of the challenges small farmers in Taiwan face?</td><td>Are you more supportive of produce from small Taiwanese farms?</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <ol class="qset">
+          <li>
+            <p class="qset__who">Speakers</p>
+            <dl class="qset__qs">
+              <div><dt>Knowledge</dt><dd>Did the forum help you understand farmers' needs and challenges?</dd></div>
+              <div><dt>Attitude</dt><dd>Do you agree more strongly that research should consider farmers' practical needs?</dd></div>
+              <div><dt>Practice</dt><dd>Will you consider farmers' needs in your future research?</dd></div>
+            </dl>
+          </li>
+          <li>
+            <p class="qset__who">Farmers</p>
+            <dl class="qset__qs">
+              <div><dt>Knowledge</dt><dd>Do you understand better how plants respond to environmental stress?</dd></div>
+              <div><dt>Attitude</dt><dd>Are you more willing to accept technology in farming?</dd></div>
+              <div><dt>Practice</dt><dd>Would you use related technology on your farm?</dd></div>
+            </dl>
+          </li>
+          <li>
+            <p class="qset__who">Public</p>
+            <dl class="qset__qs">
+              <div><dt>Knowledge</dt><dd>Do you understand better how technology applies to farming?</dd></div>
+              <div><dt>Attitude</dt><dd>Are you more aware of the challenges small farmers in Taiwan face?</dd></div>
+              <div><dt>Practice</dt><dd>Are you more supportive of produce from small Taiwanese farms?</dd></div>
+            </dl>
+          </li>
+        </ol>
         <p class="kap__note">Forum survey responses are still being tallied; they will be added here with their count.</p>
 
-        <h3>Six booths turned plant stress into something visitors could hear, see and play</h3>
+        <h3 data-toc="Six booths">Six booths turned plant stress into something visitors could hear, see and play</h3>
         <p>That afternoon we ran six booths at the Taipei Water Garden Organic Farmers' Market, alongside Green Media's Taiwanese coffee and cocoa event. Visitors collected a stamp at each booth by finishing the activity and answering a short question. Six stamps and an anonymous survey earned team merchandise and a place at the craft table.</p>
 
         <ul class="cells">
@@ -717,11 +768,15 @@
           <ul class="kap__key"><li><i class="k1"></i>High understanding</li><li><i class="k2"></i>Moderate</li><li><i class="k3"></i>Low or none</li></ul>
           <details>
             <summary>Table view</summary>
-            <div class="tablewrap"><table class="ledger"><thead><tr><th>Topic</th><th>High</th><th>Moderate</th><th>Low or none</th></tr></thead><tbody>
-              <tr><td>Climate change and agriculture</td><td>62.9%</td><td>33.9%</td><td>3.2%</td></tr>
-              <tr><td>Biotic and abiotic plant stress</td><td>66.1%</td><td>29.0%</td><td>4.9%</td></tr>
-              <tr><td>ReLeaf device and protectants</td><td>69.4%</td><td>27.4%</td><td>3.2%</td></tr>
-            </tbody></table></div>
+            <p class="tlead" id="tv-know">Self-rated understanding by topic. Share of 62 booth respondents; the values behind the bars above.</p>
+            <div class="tablewrap"><table class="tdata" aria-describedby="tv-know">
+              <thead><tr><th scope="col">Topic</th><th scope="col" class="num">High</th><th scope="col" class="num">Moderate</th><th scope="col" class="num">Low or none</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Climate change and agriculture</th><td class="num">62.9%</td><td class="num">33.9%</td><td class="num">3.2%</td></tr>
+                <tr><th scope="row">Biotic and abiotic plant stress</th><td class="num">66.1%</td><td class="num">29.0%</td><td class="num">4.9%</td></tr>
+                <tr><th scope="row">ReLeaf device and protectants</th><td class="num">69.4%</td><td class="num">27.4%</td><td class="num">3.2%</td></tr>
+              </tbody>
+            </table></div>
           </details>
         </figure>
 
@@ -737,13 +792,17 @@
           <ul class="kap__key"><li><i class="k1"></i>Strongly agree, very satisfied, highly important</li><li><i class="k2"></i>Agree, satisfied, important, partly inspired</li><li><i class="k3"></i>Neutral, average, just fun</li><li><i class="k4"></i>Disagree, not important</li></ul>
           <details>
             <summary>Table view</summary>
-            <div class="tablewrap"><table class="ledger"><thead><tr><th>Statement</th><th>Strongly</th><th>Agree</th><th>Neutral</th><th>Disagree</th></tr></thead><tbody>
-              <tr><td>Overall satisfaction</td><td>79.0%</td><td>19.4%</td><td>1.6%</td><td>0%</td></tr>
-              <tr><td>Technology matters for crop resilience</td><td>66.1%</td><td>32.3%</td><td>0%</td><td>1.6%</td></tr>
-              <tr><td>Data physicalization map helped</td><td>58.1%</td><td>37.1%</td><td>3.2%</td><td>1.6%</td></tr>
-              <tr><td>More attention to climate impact</td><td>51.6%</td><td>46.8%</td><td>1.6%</td><td>0%</td></tr>
-              <tr><td>Inspired across fields</td><td>45.2%</td><td>33.9%</td><td>21.0%</td><td>0%</td></tr>
-            </tbody></table></div>
+            <p class="tlead" id="tv-att">Attitude responses by statement. Share of 62 booth respondents; the values behind the bars above.</p>
+            <div class="tablewrap"><table class="tdata" aria-describedby="tv-att">
+              <thead><tr><th scope="col">Statement</th><th scope="col" class="num">Strongly</th><th scope="col" class="num">Agree</th><th scope="col" class="num">Neutral</th><th scope="col" class="num">Disagree</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Overall satisfaction</th><td class="num">79.0%</td><td class="num">19.4%</td><td class="num">1.6%</td><td class="num">0%</td></tr>
+                <tr><th scope="row">Technology matters for crop resilience</th><td class="num">66.1%</td><td class="num">32.3%</td><td class="num">0%</td><td class="num">1.6%</td></tr>
+                <tr><th scope="row">Data physicalization map helped</th><td class="num">58.1%</td><td class="num">37.1%</td><td class="num">3.2%</td><td class="num">1.6%</td></tr>
+                <tr><th scope="row">More attention to climate impact</th><td class="num">51.6%</td><td class="num">46.8%</td><td class="num">1.6%</td><td class="num">0%</td></tr>
+                <tr><th scope="row">Inspired across fields</th><td class="num">45.2%</td><td class="num">33.9%</td><td class="num">21.0%</td><td class="num">0%</td></tr>
+              </tbody>
+            </table></div>
           </details>
           <p class="kap__note">Charts redrawn from the team's survey figures; values as reported. The inspiration row reports 100.1% in the source through rounding.</p>
         </figure>
@@ -755,7 +814,7 @@
 
       <!-- ================================================== 6 · CONCLUSION == -->
       <section class="sec" id="conclusion">
-        <h2>Conclusion: how this work answers the six IHP judging questions</h2>
+        <h2 data-toc="Judging criteria">Conclusion: how this work answers the six IHP judging questions</h2>
         <p class="stand">The judging handbook asks six questions about Integrated Human Practices [1]. <b>Each answer below points to evidence on this page or elsewhere on the wiki.</b></p>
 
         <div class="rubric">
@@ -813,7 +872,7 @@
           </div>
         </div>
 
-        <h3>Still open after the wiki freeze</h3>
+        <h3 data-toc="Still open">Still open after the wiki freeze</h3>
         <ul class="openlist">
           <li><span class="stamp stamp--open">Open</span><span>The shell-side leak reviewed with Prof. Chang on 4 September, and replicated containment plating with a stated n.</span></li>
           <li><span class="stamp stamp--open">Open</span><span>Transmembrane pressure logging and a design response to foaming, both raised by Prof. Chang in June.</span></li>
@@ -917,7 +976,7 @@
   <script src="../assets/js/nav.js"></script>
   <script src="evomap-data.js"></script>
   <script src="evomap.js"></script>
-  <script src="ihp.js"></script>
   <script src="../assets/js/page.js"></script>
+  <script src="ihp.js"></script>
 </body>
 </html>

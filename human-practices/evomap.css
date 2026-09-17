@@ -1,633 +1,539 @@
 /* =============================================================================
-   ReLeaf: Project Evolution Map: styles
+   ReLeaf: Project Evolution Map
    -----------------------------------------------------------------------------
-   Everything is scoped under .evomap. No global element is restyled, and no
-   token in tokens.css is redefined; the drawing-set colours from DESIGN.md are
-   declared here under an --em-* prefix so this component carries its own copy
-   and can drop onto any sheet.
+   The page's special section. It takes the layout of the team's own roadmap
+   draft (a road down the page, engagement cards alternating either side of it,
+   and a decision pill on the road between them) and puts it on the blueprint
+   ground the engineering atlas uses. The page fades into that ground as the
+   section arrives and back out of it afterwards.
 
-   The component is two grounds, as the design set requires: the plate is
-   blueprint, everything around it is drafting stock inherited from the page.
-   Square corners, hairlines instead of shadows, Inter only, state named in
-   words before it is drawn or coloured.
+   Rendered entirely by evomap.js from evomap-data.js. Nothing here styles
+   anything outside .sec--evo, except the two rules that invert the contents
+   rail while the dark band fills the screen.
    ========================================================================== */
 
-.evomap {
-  /* grounds */
-  --em-blue-900: #0c231a;
-  --em-blue-800: #10301f;
-  --em-blue-700: #16412c;
-  --em-paper-2:  #eceee7;
-  --em-vellum:   #fbfbf8;
-
-  /* ink on stock */
-  --em-ink:        #15201a;
-  --em-ink-2:      #3d4a43;
-  --em-graphite:   #5c6b62;
-  --em-graphite-2: #93a099;
-
-  /* leaf */
-  --em-leaf-900: #14402b;
-  --em-leaf-700: #23684a;
-  --em-leaf-500: #4f9c6f;
-  --em-leaf-200: #cfe4d8;
-
-  /* on blueprint */
-  --em-plate-ink:       #dfe9e2;
-  --em-plate-ink-muted: #8fae9d;
-  --em-plate-rule:      rgba(180, 215, 195, .34);
-  --em-plate-node:      #7fc9a2;
-
-  /* the one crossing colour, per the design set: amber means cross-thread */
-  --em-amber:      #d6b078;
-  --em-amber-dark: #8f6210;
-  --em-open:       #a33d21;
-  --em-open-plate: #d8734c;
-
-  --em-rule-heavy: 1.5px;
-  --em-rule: 1px;
-  --em-fld: 600 .6875rem/1.2 var(--font-display, Inter, sans-serif);
-  --em-lsp: .13em;
-
-  color: var(--em-ink);
-  font-family: var(--font-body, Inter, sans-serif);
+.evo {
+  /* the blueprint ground, from the engineering atlas */
+  --evo-ground:  #0c231a;
+  --evo-strip:   #10301f;
+  --evo-card:    #16412c;
+  --evo-ink:     #e7f0ea;
+  --evo-ink-2:   #a9c3b5;
+  --evo-rule:    rgba(180, 215, 195, .26);
+  --evo-rule-2:  rgba(180, 215, 195, .5);
+  --evo-leaf:    #7cc49a;
+  --evo-amber:   #d6b078;
+  --evo-rust:    #d8734c;
+  --evo-r:       3px;
 }
 
-.evomap *,
-.evomap *::before,
-.evomap *::after { box-sizing: border-box; }
+/* ------------------------------------------------------------ THE BAND -- */
+/* Full bleed out of the page column, with a gradient at each end so the
+   drafting stock turns into blueprint instead of meeting it at a line.     */
 
-.evomap [hidden] { display: none !important; }
+.sec--evo {
+  /* Full bleed, measured rather than assumed: 100vw includes the vertical
+     scrollbar, which would push the page sideways by its width. evomap.js
+     writes the real client width into --evo-vw and keeps it current. */
+  --vw: var(--evo-vw, 100vw);
+  position: relative;
+  margin-left: calc(50% - var(--vw) / 2);
+  margin-right: calc(50% - var(--vw) / 2);
+  width: var(--vw);
+  max-width: var(--vw);
+  padding: 0;
+  background: var(--evo-ground, #0c231a);
+  color: #e7f0ea;
+  overflow: clip;
+}
+.ihp .sec--evo + .sec { margin-top: var(--sp-8); }
 
-.evomap .em-fld {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-  color: var(--em-graphite);
-}
-
-/* ================================================================ TALLY === */
-/* A quantity schedule with ruled cells, not a row of hero metrics. */
-
-.evomap .em-tally {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0 0 var(--sp-5, 1.5rem);
-  border-top: var(--em-rule-heavy) solid var(--em-ink);
-  border-bottom: var(--em-rule) solid var(--em-graphite-2);
-}
-@media (min-width: 48rem) {
-  .evomap .em-tally { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-.evomap .em-tally > div {
-  padding: .7rem .9rem .8rem;
-  border-right: var(--em-rule) solid var(--em-graphite-2);
-}
-.evomap .em-tally > div:last-child { border-right: 0; }
-@media (max-width: 47.99rem) {
-  .evomap .em-tally > div:nth-child(2n) { border-right: 0; }
-  .evomap .em-tally > div:nth-child(-n+2) { border-bottom: var(--em-rule) solid var(--em-graphite-2); }
-}
-.evomap .em-tally dt {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-  margin: 0 0 .3rem;
-}
-.evomap .em-tally dd {
-  margin: 0;
-  font-weight: 700;
-  font-size: clamp(1.375rem, 1.1rem + .9vw, 1.875rem);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -.02em;
-  color: var(--em-leaf-900);
-}
-.evomap .em-tally dd span {
-  display: block;
-  margin-top: .35rem;
-  font-size: var(--text-sm, .9375rem);
-  font-weight: 400;
-  letter-spacing: normal;
-  line-height: 1.4;
-  color: var(--em-ink-2);
-}
-
-/* ============================================================== CONTROLS == */
-
-.evomap .em-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .4rem;
-  margin: 0 0 var(--sp-4, 1rem);
-}
-.evomap .em-controls__label {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-  margin-right: .3rem;
-}
-.evomap .em-controls__sep {
-  flex: 0 0 var(--em-rule);
-  align-self: stretch;
-  min-height: 1.75rem;
-  background: var(--em-graphite-2);
-  margin: 0 .35rem;
-}
-.evomap .em-chip {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  padding: .45em .85em;
-  border: var(--em-rule) solid var(--em-graphite-2);
-  border-radius: 0;
-  background: none;
-  color: var(--em-ink-2);
-  cursor: pointer;
-  transition: background .14s ease, border-color .14s ease, color .14s ease;
-}
-.evomap .em-chip:hover { border-color: var(--em-leaf-700); color: var(--em-leaf-900); }
-.evomap .em-chip[aria-pressed="true"] {
-  background: var(--em-leaf-900);
-  border-color: var(--em-leaf-900);
-  color: #fff;
-}
-.evomap .em-chip--cross[aria-pressed="true"] {
-  background: var(--em-amber-dark);
-  border-color: var(--em-amber-dark);
-}
-
-/* =============================================================== PLATE ==== */
-
-.evomap .em-plate {
-  background: var(--em-blue-900);
-  color: var(--em-plate-ink);
-  padding: var(--sp-5, 1.5rem) 0 var(--sp-4, 1rem);
-}
-.evomap .em-plate__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .5rem 1rem;
-  padding: 0 var(--sp-5, 1.5rem) var(--sp-4, 1rem);
-  margin: 0 var(--sp-5, 1.5rem) var(--sp-4, 1rem) var(--sp-5, 1.5rem);
-  border-bottom: var(--em-rule) solid var(--em-plate-rule);
-}
-.evomap .em-plate__head h3 {
-  margin: 0;
-  font-family: var(--font-display, Inter, sans-serif);
-  font-variation-settings: "opsz" 32;
-  font-size: clamp(1.0625rem, 1rem + .35vw, 1.3125rem);
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: #fff;
-}
-.evomap .em-plate__head p {
-  margin: 0;
-  font-size: var(--text-sm, .9375rem);
-  line-height: 1.5;
-  color: var(--em-plate-ink-muted);
-  max-width: 62ch;
-}
-.evomap .em-plate__scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0 var(--sp-5, 1.5rem);
-  -webkit-overflow-scrolling: touch;
-}
-.evomap .em-svg {
-  display: block;
-  width: 100%;
-  min-width: 1180px;
-  height: auto;
-}
-.evomap .em-svg text { font-family: var(--font-display, Inter, sans-serif); }
-.evomap .em-hint {
-  margin: var(--sp-3, .75rem) var(--sp-5, 1.5rem) 0;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-plate-ink-muted);
-}
-@media (min-width: 78rem) { .evomap .em-hint--scroll { display: none; } }
-.evomap .em-hint--note {
-  font: 400 var(--text-xs, .8125rem)/1.5 var(--font-body, Inter, sans-serif);
-  letter-spacing: normal;
-  text-transform: none;
-  max-width: 68ch;
-}
-
-/* ------------------------------------------------------- SVG PRIMITIVES -- */
-
-.evomap .em-axis-rule { stroke: var(--em-plate-rule); stroke-width: 1; }
-.evomap .em-axis-tick { stroke: var(--em-plate-ink-muted); stroke-width: 1; }
-.evomap .em-axis-label {
-  fill: var(--em-plate-ink-muted);
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-}
-.evomap .em-lane-rule { stroke: var(--em-plate-rule); stroke-width: 1; }
-.evomap .em-lane-base { stroke: var(--em-plate-rule); stroke-width: 1; }
-.evomap .em-lane-name {
-  fill: var(--em-plate-ink-muted);
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-}
-.evomap .em-state-line {
-  stroke: var(--em-leaf-500);
-  stroke-width: 2;
-  fill: none;
-}
-.evomap .em-state-line--first { stroke: var(--em-plate-ink-muted); stroke-dasharray: 5 4; }
-.evomap .em-state-notch { stroke: var(--em-leaf-500); stroke-width: 1; }
-.evomap .em-state-label {
-  fill: var(--em-plate-ink-muted);
-  font-size: 10.5px;
-  font-weight: 500;
-}
-.evomap .em-state-label--last { fill: var(--em-plate-ink); font-weight: 600; }
-
-.evomap .em-stitch { stroke: var(--em-plate-ink-muted); stroke-width: 1; }
-.evomap .em-mark { fill: var(--em-plate-ink); stroke: none; }
-.evomap .em-head { fill: none; stroke: var(--em-plate-ink-muted); stroke-width: 1; }
-.evomap .em-head-no {
-  fill: var(--em-plate-ink-muted);
-  font: var(--em-fld);
-  font-size: 9px;
-  letter-spacing: .06em;
-}
-.evomap .em-build-mark { fill: none; stroke: var(--em-plate-ink-muted); stroke-width: 1; }
-.evomap .em-build-mark--approx { stroke-dasharray: 3 2.5; }
-.evomap .em-build-label { fill: var(--em-plate-ink-muted); font-size: 10px; }
-
-.evomap .em-loop-arc { fill: none; stroke: var(--em-leaf-500); stroke-width: 1.2; }
-.evomap .em-loop { cursor: pointer; }
-.evomap .em-loop:focus { outline: none; }
-.evomap .em-loop:hover .em-loop-arc,
-.evomap .em-loop:focus-visible .em-loop-arc { stroke: var(--em-plate-node); stroke-width: 2; }
-.evomap .em-loop:focus-visible .em-loop-chip { stroke: #fff; stroke-width: 1.5; }
-.evomap .em-loop-label {
-  fill: var(--em-plate-node);
-  font: var(--em-fld);
-  font-size: 10px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.evomap .em-loop-count {
-  fill: #fff;
-  font: var(--em-fld);
-  font-size: 9.5px;
-  letter-spacing: .04em;
-}
-.evomap .em-loop-chip { fill: var(--em-leaf-700); stroke: var(--em-leaf-500); stroke-width: 1; }
-
-.evomap .em-chain-arc {
-  fill: none;
-  stroke: var(--em-amber);
-  stroke-width: 1.1;
-  stroke-dasharray: 6 4;
-}
-.evomap .em-chain-head { fill: var(--em-amber); }
-.evomap .em-chain-label { fill: var(--em-amber); font-size: 10px; }
-
-/* A halo in the plate colour keeps a label legible where a stitch or a month
-   rule runs through it. It is the ground, not a shadow. */
-.evomap .em-state-label,
-.evomap .em-build-label,
-.evomap .em-chain-label,
-.evomap .em-lane-name {
-  paint-order: stroke;
-  stroke: var(--em-blue-900);
-  stroke-width: 4px;
-  stroke-linejoin: round;
-}
-
-/* node hit target and its states */
-.evomap .em-node { cursor: pointer; }
-.evomap .em-node__hit { fill: transparent; }
-.evomap .em-node__flag { display: none; }
-.evomap .em-node__flag rect { fill: var(--em-blue-700); stroke: var(--em-leaf-500); stroke-width: 1; }
-.evomap .em-node__flag text { fill: #fff; font-size: 11px; font-weight: 600; }
-.evomap .em-node:hover .em-node__flag,
-.evomap .em-node:focus-visible .em-node__flag,
-.evomap .em-node.is-sel .em-node__flag { display: block; }
-.evomap .em-node:hover .em-mark,
-.evomap .em-node:focus-visible .em-mark { fill: var(--em-plate-node); }
-.evomap .em-node:hover .em-stitch,
-.evomap .em-node:focus-visible .em-stitch { stroke: var(--em-plate-node); }
-.evomap .em-node:focus, .evomap .em-node:focus-visible { outline: none; }
-.evomap .em-node:focus-visible .em-node__ring { stroke: var(--em-leaf-500); stroke-width: 2; }
-.evomap .em-node__ring { fill: none; stroke: none; }
-.evomap .em-node.is-sel .em-mark { fill: #fff; }
-.evomap .em-node.is-sel .em-stitch { stroke: #fff; }
-.evomap .em-node.is-sel .em-node__ring { stroke: var(--em-leaf-500); stroke-width: 1.5; }
-.evomap .em-node--pending .em-mark { fill: none; stroke: var(--em-open-plate); stroke-width: 1.5; }
-.evomap .em-node--pending .em-head { stroke: var(--em-open-plate); }
-
-/* dimming: one class, applied by script */
-.evomap .is-dim { opacity: .18; }
-.evomap .em-svg g, .evomap .em-svg path, .evomap .em-svg rect, .evomap .em-svg text {
-  transition: opacity .16s ease;
-}
-@media (prefers-reduced-motion: reduce) {
-  .evomap .em-svg g, .evomap .em-svg path, .evomap .em-svg rect, .evomap .em-svg text,
-  .evomap .em-chip { transition: none; }
-}
-
-/* ================================================================= KEY ==== */
-
-.evomap .em-key {
-  display: grid;
-  gap: var(--sp-4, 1rem) var(--sp-6, 2rem);
-  margin: var(--sp-5, 1.5rem) 0 0;
-  padding: var(--sp-4, 1rem) 0 0;
-  border-top: var(--em-rule) solid var(--em-graphite-2);
-  font-size: var(--text-sm, .9375rem);
-  line-height: 1.55;
-}
-@media (min-width: 48rem) { .evomap .em-key { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 62rem) { .evomap .em-key { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.evomap .em-key h4 {
-  margin: 0 0 .5rem;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-}
-.evomap .em-key ul { margin: 0; padding: 0; list-style: none; }
-.evomap .em-key li {
-  display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: .6rem;
-  align-items: center;
-  padding: .3rem 0;
-  color: var(--em-ink-2);
-}
-.evomap .em-key svg { display: block; overflow: visible; }
-
-/* =============================================================== PANEL ==== */
-
-.evomap .em-panel {
-  margin: var(--sp-5, 1.5rem) 0 0;
-  border: var(--em-rule) solid var(--em-graphite-2);
-  border-top: var(--em-rule-heavy) solid var(--em-leaf-700);
-  background: var(--em-vellum);
-  padding: var(--sp-4, 1rem) var(--sp-5, 1.5rem) var(--sp-5, 1.5rem);
-}
-.evomap .em-panel__hint {
-  margin: 0;
-  font-size: var(--text-sm, .9375rem);
-  color: var(--em-ink-2);
-  max-width: 68ch;
-}
-.evomap .em-panel__top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .5rem 1rem;
-  padding-bottom: var(--sp-3, .75rem);
-  border-bottom: var(--em-rule) solid var(--em-graphite-2);
-}
-.evomap .em-panel__date {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-leaf-700);
-}
-.evomap .em-panel h4 {
-  margin: .6rem 0 .15rem;
-  font-family: var(--font-display, Inter, sans-serif);
-  font-variation-settings: "opsz" 32;
-  font-size: clamp(1.125rem, 1rem + .5vw, 1.4375rem);
-  font-weight: 700;
-  letter-spacing: -.015em;
-  color: var(--em-leaf-900);
-}
-.evomap .em-panel h4 i { font-style: normal; color: var(--em-graphite); font-weight: 600; }
-.evomap .em-panel__role {
-  margin: 0 0 var(--sp-3, .75rem);
-  font-size: var(--text-sm, .9375rem);
-  color: var(--em-ink-2);
-}
-.evomap .em-panel__close {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  padding: .4em .7em;
-  border: var(--em-rule) solid var(--em-graphite-2);
-  background: none;
-  color: var(--em-ink-2);
-  cursor: pointer;
-}
-.evomap .em-panel__close:hover { border-color: var(--em-leaf-700); color: var(--em-leaf-900); }
-
-.evomap .em-areas { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 var(--sp-4, 1rem); padding: 0; list-style: none; }
-.evomap .em-areas li {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  padding: .3em .6em;
-  border: var(--em-rule) solid var(--em-leaf-500);
-  color: var(--em-leaf-900);
-}
-
-.evomap .em-stamp {
-  display: inline-block;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  padding: .25em .55em;
-  border: var(--em-rule) solid currentColor;
-  color: var(--em-leaf-700);
-}
-.evomap .em-stamp::before {
+.sec--evo::before,
+.sec--evo::after {
   content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: clamp(3rem, 6vw, 6rem);
+  pointer-events: none;
+  z-index: 2;
+}
+.sec--evo::before { top: 0;    background: linear-gradient(to bottom, var(--white) 0%, rgba(12, 35, 26, .55) 55%, rgba(12, 35, 26, 0) 100%); }
+.sec--evo::after  { bottom: 0; background: linear-gradient(to top,    var(--white) 0%, rgba(12, 35, 26, .55) 55%, rgba(12, 35, 26, 0) 100%); }
+
+/* the section's own heading and standfirst, set on the dark ground */
+.sec--evo > h2,
+.sec--evo > .stand {
+  position: relative;
+  z-index: 3;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
+}
+.sec--evo > h2 {
+  padding-top: clamp(4.5rem, 10vw, 9rem);
+  color: #ffffff;
+}
+.sec--evo > h2 .sec__no { color: var(--evo-leaf); }
+.sec--evo > .stand { color: var(--evo-ink-2); }
+.sec--evo > .stand b { color: #ffffff; }
+
+/* While the band fills the screen the page behind it goes dark too, so the
+   margins and the contents rail belong to the same picture. */
+/* The band is full bleed, so the rail would be underneath it. Lift the rail
+   instead and let it read in pale ink over the blueprint: the section takes
+   the whole window and the reader keeps their place in the page. */
+.ihp .toc { z-index: 30; }
+
+html.evo-dark body { background: #0c231a; }
+html.evo-dark .ihp .toc { color: #cfe0d6; }
+html.evo-dark .ihp .toc .toc__list { border-left-color: rgba(180, 215, 195, .25); }
+html.evo-dark .ihp .toc .toc__list a { color: #9fbdac; }
+html.evo-dark .ihp .toc .toc__list a:hover { color: #ffffff; background: rgba(231, 240, 234, .08); }
+html.evo-dark .ihp .toc .toc__list a.is-active { color: #ffffff; border-left-color: #7cc49a; }
+html.evo-dark .ihp .toc .toc__list .is-sub a { color: #86a493; }
+html.evo-dark .ihp .toc .toc__list .is-sub a.is-active { color: #ffffff; }
+html.evo-dark .ihp .toc__title { color: #7f9d8c; }
+html.evo-dark .ihp .toc > summary { color: #cfe0d6; }
+@media (max-width: 1039px) {
+  html.evo-dark .ihp .toc { background: #10301f; border-color: rgba(180, 215, 195, .25); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body { transition: background-color .5s ease; }
+  html.evo-dark .ihp .toc,
+  html.evo-dark .ihp .toc .toc__list a { transition: color .5s ease, border-color .5s ease; }
+}
+
+/* ----------------------------------------------------------- THE FRAME -- */
+/* page.css colours headings and prose for the drafting-stock ground. On the
+   blueprint band every one of them inherits from the band instead, so these
+   rules carry the specificity to say so once. */
+
+.ihp .pagebody .sec--evo > .stand { max-width: 1180px; }
+.sec--evo .evo h3,
+.sec--evo .evo h4,
+.sec--evo .evo h5 { color: inherit; font-size: inherit; margin: 0; }
+.sec--evo .evo__sheetcard h3 { color: var(--leaf-900); font-size: 1.35rem; margin: .2rem 0 .1rem; }
+.sec--evo .evo__sheetcard h4 { color: var(--gray-500); font-size: .6875rem; margin: 1.4rem 0 .5rem; }
+.sec--evo .evo__sheetcard h5 { font-size: .625rem; margin: 0 0 .4rem; }
+.sec--evo .evo__sheetcard p,
+.sec--evo .evo__sheetcard li { color: var(--black); }
+.sec--evo .evo__sheetcard .evo__sheetmeta,
+.sec--evo .evo__sheetcard .evo__src,
+.sec--evo .evo__sheetcard figcaption { color: var(--gray-500); }
+.sec--evo .evo p,
+.sec--evo .evo li,
+.sec--evo .evo ul { color: inherit; max-width: none; }
+.sec--evo .evo a { color: var(--evo-leaf); }
+
+.evo {
+  position: relative;
+  z-index: 3;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 10vw, 9rem);
+  font-size: var(--text-sm);
+  color: var(--evo-ink);
+}
+.evo *:focus-visible { outline: 2px solid var(--evo-leaf); outline-offset: 2px; }
+
+/* ------------------------------------------------------------- CONTROLS -- */
+
+.evo__controls {
+  position: sticky;
+  top: calc(var(--nav-h) - 1px);
+  z-index: 40;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+  padding: .85rem 0;
+  background: var(--evo-ground);
+  border-bottom: 1px solid var(--evo-rule);
+}
+.evo__filters { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.evo__flabel {
+  font-size: .625rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: #7f9d8c; margin-right: .35rem;
+}
+.evo__chip {
+  appearance: none;
+  border: 1px solid var(--evo-rule-2);
+  background: transparent;
+  color: #cfe0d6;
+  border-radius: 999px;
+  padding: .4rem .85rem;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.evo__chip:hover { border-color: #ffffff; color: #ffffff; }
+.evo__chip[aria-pressed="true"] { background: #d8ece0; border-color: #d8ece0; color: #0c231a; font-weight: 600; }
+.evo__chip--thread[aria-pressed="true"] { background: var(--evo-leaf); border-color: var(--evo-leaf); }
+.evo__count {
+  margin-left: auto;
+  font-size: .72rem;
+  color: #7f9d8c;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------- STATE BOXES -- */
+
+.evo__plan {
+  position: relative;
+  z-index: 12;
+  border: 1px solid var(--evo-rule);
+  border-radius: var(--evo-r);
+  background: var(--evo-strip);
+  padding: 1.1rem 1.3rem 1.25rem;
+  max-width: 44rem;
+}
+.evo__plan--end { margin-left: auto; }
+.evo__label {
   display: inline-block;
-  width: .5em; height: .5em;
-  margin-right: .45em;
-  background: currentColor;
-  vertical-align: baseline;
+  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  padding: .2rem .5rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  margin-bottom: .6rem;
 }
-.evomap .em-stamp--open { color: var(--em-open); }
-.evomap .em-stamp--loop { color: var(--em-leaf-700); }
+.evo__plan--start .evo__label { color: var(--evo-amber); }
+.evo__plan--end .evo__label { color: var(--evo-leaf); }
+.sec--evo .evo__plan h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: #ffffff; line-height: 1.3; }
+.evo__plan p { margin: 0; color: var(--evo-ink-2); line-height: 1.6; max-width: 62ch; }
 
-.evomap .em-body { display: grid; gap: var(--sp-5, 1.5rem); }
-@media (min-width: 56rem) {
-  .evomap .em-body { grid-template-columns: minmax(0, 1fr) 17rem; align-items: start; }
-}
-.evomap .em-body p, .evomap .em-body li { max-width: 68ch; }
-.evomap .em-body h5 {
-  margin: var(--sp-4, 1rem) 0 .45rem;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-}
-.evomap .em-body h5:first-child { margin-top: 0; }
-.evomap .em-summary { margin: 0; font-size: var(--text-base, 1.0625rem); line-height: 1.6; }
+/* --------------------------------------------------------------- ROAD -- */
 
-.evomap .em-quote {
-  margin: var(--sp-4, 1rem) 0;
-  padding: .1rem 0 .1rem var(--sp-4, 1rem);
-  border-left: var(--em-rule) solid var(--em-graphite);
-  font-size: var(--text-base, 1.0625rem);
+.evo__road { position: relative; padding: 1.5rem 0 .5rem; }
+.evo__line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.evo__line path { fill: none; }
+.evo__line .rd { stroke: var(--evo-rule-2); stroke-width: 2; }
+.evo__line .rd--dim { stroke: rgba(180, 215, 195, .16); }
+.evo__line .thread { stroke: var(--evo-leaf); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+.evo__line .dot { fill: var(--evo-ground); stroke: var(--evo-rule-2); stroke-width: 2; }
+
+.evo__month {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  margin: 2.25rem 0 1.5rem;
+}
+.evo__month span {
+  font-size: .6875rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: #8fae9d;
+  font-variant-numeric: tabular-nums;
+}
+.evo__month::after { content: ""; flex: 1; border-bottom: 1px solid var(--evo-rule); }
+.evo__month[hidden] { display: none; }   /* the attribute alone loses to display:flex */
+
+/* one engagement */
+.evo__row { position: relative; z-index: 5; margin-bottom: 2rem; }
+.evo__row[hidden] { display: none; }
+
+.evo__card {
+  position: relative;
+  z-index: 10;
+  background: var(--evo-card);
+  border: 1px solid var(--evo-rule);
+  border-radius: var(--evo-r);
+  padding: 1.1rem 1.25rem 1.25rem;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.evo__card:hover { border-color: var(--evo-rule-2); }
+.evo__row--thread .evo__card { border-color: rgba(124, 196, 154, .55); }
+.evo__row--pending .evo__card { border-style: dashed; }
+
+.evo__meta {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .75rem;
+  margin-bottom: .5rem;
+}
+.evo__date {
+  font-size: .6875rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--evo-leaf); font-variant-numeric: tabular-nums;
+}
+.evo__no {
+  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #7f9d8c; font-variant-numeric: tabular-nums;
+}
+.evo__kind {
+  font-size: .625rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #8fae9d; border: 1px solid var(--evo-rule); border-radius: 2px; padding: .15rem .4rem;
+}
+.sec--evo .evo__who { margin: 0 0 .15rem; font-size: 1.0625rem; font-weight: 700; color: #ffffff; line-height: 1.25; }
+.evo__who i { font-style: normal; color: var(--evo-ink-2); font-weight: 500; }
+.evo__role { margin: 0 0 .75rem; color: #8fae9d; font-size: .8125rem; line-height: 1.45; }
+
+.evo__areas { display: flex; flex-wrap: wrap; gap: .3rem; margin: 0 0 .85rem; padding: 0; list-style: none; }
+.evo__areas li {
+  font-size: .625rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: #bcd4c6; border: 1px solid var(--evo-rule); border-radius: 999px; padding: .2rem .55rem;
+}
+
+.evo__said {
+  margin: 0 0 .85rem;
+  padding: .7rem .9rem;
+  border-left: 2px solid var(--evo-amber);
+  background: rgba(214, 176, 120, .09);
+  border-radius: 0 var(--evo-r) var(--evo-r) 0;
+  color: #f0e6d5;
   line-height: 1.55;
-  color: var(--em-leaf-900);
 }
-.evomap .em-quote--said { background: var(--em-paper-2); border-left-color: var(--em-leaf-700); padding: .75rem 1rem; }
-
-.evomap .em-list { margin: 0; padding-left: 1.15rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; }
-.evomap .em-list li { margin-bottom: .35rem; }
-
-.evomap .em-ba { display: grid; gap: 1px; background: var(--em-graphite-2); border: var(--em-rule) solid var(--em-graphite-2); }
-@media (min-width: 40rem) { .evomap .em-ba { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.evomap .em-ba > div { background: var(--em-vellum); padding: .8rem 1rem 1rem; }
-.evomap .em-ba h6 {
-  margin: 0 0 .5rem;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-}
-.evomap .em-ba--after h6 { color: var(--em-leaf-700); }
-.evomap .em-ba ul { margin: 0; padding-left: 1.05rem; font-size: var(--text-sm, .9375rem); line-height: 1.5; }
-.evomap .em-ba li { margin-bottom: .3rem; }
-.evomap .em-ba p { margin: 0; font-size: var(--text-sm, .9375rem); color: var(--em-graphite); }
-
-/* the visit comparison: three ruled columns, visit 1 / what we built / visit 2 */
-.evomap .em-cmp {
-  margin: var(--sp-5, 1.5rem) 0 0;
-  border-top: var(--em-rule-heavy) solid var(--em-ink);
-}
-.evomap .em-cmp__grid { display: grid; gap: 1px; background: var(--em-graphite-2); }
-@media (min-width: 52rem) { .evomap .em-cmp__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.evomap .em-cmp__grid > div { background: var(--em-vellum); padding: .85rem 1rem 1.1rem; }
-.evomap .em-cmp__grid > div.is-mid { background: var(--em-paper-2); }
-.evomap .em-cmp__mid {
-  margin-top: 1px;
-  background: var(--em-graphite-2);
-  padding-top: 1px;
-}
-.evomap .em-cmp__mid > div { background: var(--em-paper-2); padding: .85rem 1rem 1.1rem; }
-.evomap .em-cmp h6 {
-  margin: 0 0 .45rem;
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-graphite);
-}
-.evomap .em-cmp b { color: var(--em-leaf-900); }
-.evomap .em-cmp p { margin: 0 0 .5rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; }
-.evomap .em-cmp ul { margin: 0; padding-left: 1.05rem; font-size: var(--text-sm, .9375rem); line-height: 1.5; }
-.evomap .em-cmp__depth {
-  margin: 0;
-  padding: var(--sp-4, 1rem) 0 0;
-  font-size: var(--text-sm, .9375rem);
-  line-height: 1.6;
-  max-width: 68ch;
-  color: var(--em-ink);
+.evo__said b {
+  display: block;
+  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--evo-amber); margin-bottom: .25rem;
 }
 
-.evomap .em-side { display: grid; gap: var(--sp-4, 1rem); align-content: start; }
-.evomap figure.em-fig { margin: 0; }
-.evomap figure.em-fig img {
+.evo__points { margin: 0 0 .9rem; padding-left: 1rem; color: var(--evo-ink-2); line-height: 1.55; }
+.evo__points li + li { margin-top: .3rem; }
+
+.evo__foot { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.evo__more {
+  appearance: none;
+  border: 1px solid var(--evo-rule-2);
+  background: transparent;
+  color: #dff0e6;
+  border-radius: var(--evo-r);
+  padding: .4rem .8rem;
+  font: inherit; font-size: .75rem; font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.evo__more:hover { background: #d8ece0; color: #0c231a; }
+
+/* the return-visit ribbon */
+.evo__thread {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+  margin: -.15rem 0 .8rem;
+  padding: .45rem .7rem;
+  background: rgba(124, 196, 154, .12);
+  border: 1px solid rgba(124, 196, 154, .4);
+  border-radius: var(--evo-r);
+}
+.evo__thread b {
+  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--evo-leaf);
+}
+.evo__thread span { color: #cfe0d6; font-size: .78rem; }
+.evo__thread button {
+  appearance: none; border: 0; background: none; padding: 0;
+  font: inherit; font-size: .78rem; font-weight: 600; color: var(--evo-leaf);
+  text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+
+/* what we built between two visits, shown on the road */
+.evo__built {
+  margin: .8rem 0 0;
+  padding: .7rem .9rem;
+  border: 1px dashed var(--evo-rule-2);
+  border-radius: var(--evo-r);
+  background: rgba(231, 240, 234, .04);
+}
+.evo__built b {
+  display: block;
+  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #8fae9d; margin-bottom: .35rem;
+}
+.evo__built ul { margin: 0; padding-left: 1rem; color: var(--evo-ink-2); line-height: 1.5; }
+.evo__built li + li { margin-top: .25rem; }
+
+/* the decision pill that sits on the road under a card */
+.evo__pill {
+  position: relative;
+  z-index: 12;
+  display: block;
   width: 100%;
-  height: auto;
-  background: var(--em-paper-2);
-  border: var(--em-rule) solid var(--em-graphite-2);
-  border-radius: 0;
+  margin: .9rem 0 0;
+  padding: .55rem .9rem;
+  text-align: left;
+  background: var(--evo-strip);
+  border: 1px solid var(--evo-rule-2);
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
 }
-.evomap figure.em-fig figcaption {
-  margin-top: .5rem;
-  padding-left: .75rem;
-  border-left: var(--em-rule) solid var(--em-graphite);
-  font-size: var(--text-xs, .8125rem);
-  line-height: 1.5;
-  color: var(--em-ink-2);
+.evo__pill:hover { border-color: var(--evo-leaf); background: #143826; }
+.evo__pill b {
+  display: block;
+  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--evo-leaf); margin-bottom: .1rem;
 }
-.evomap figure.em-fig .em-prov { display: block; margin-top: .25rem; font-size: .75rem; color: var(--em-graphite); }
+.evo__pill span { display: block; color: #dff0e6; font-size: .8125rem; line-height: 1.4; }
 
-.evomap .em-links { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0; padding: 0; list-style: none; }
-.evomap .em-links a {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-leaf-700);
-  text-decoration: none;
-  border-bottom: var(--em-rule) solid var(--em-leaf-500);
-  padding-bottom: .15em;
-}
-.evomap .em-links a:hover { color: var(--em-leaf-900); border-bottom-color: var(--em-leaf-900); }
-.evomap .em-src {
-  margin: var(--sp-4, 1rem) 0 0;
-  font-size: var(--text-xs, .8125rem);
-  line-height: 1.5;
-  color: var(--em-graphite);
-  max-width: 68ch;
+.evo__empty {
+  margin: 2rem 0;
+  padding: 1.25rem;
+  border: 1px dashed var(--evo-rule);
+  border-radius: var(--evo-r);
+  color: var(--evo-ink-2);
+  text-align: center;
 }
 
-/* ============================================================ LIST VIEW === */
+/* ------------------------------------------------------- DESKTOP ROAD -- */
+/* From 62rem the cards alternate either side of a curving road, which is the
+   shape of the team's own roadmap draft. Below that they stack in one column
+   against a straight spine, because a curve needs width to be legible.     */
 
-.evomap .em-listview { margin: var(--sp-5, 1.5rem) 0 0; }
-.evomap .em-listview h3, .evomap .em-listview h4 {
-  font-family: var(--font-display, Inter, sans-serif);
-  font-variation-settings: "opsz" 32;
-  color: var(--em-leaf-900);
+@media (min-width: 62rem) {
+  .evo__road { padding: 2.5rem 0 1rem; }
+  .evo__row { display: flex; margin-bottom: 6rem; }
+  .evo__row > .evo__card { width: 45%; }
+  .evo__row--right { justify-content: flex-end; }
+  .evo__row--left  { justify-content: flex-start; }
+  .evo__pill {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 1.25rem);
+    transform: translate(-50%, 0);
+    width: min(23rem, 34%);
+    margin: 0;
+    text-align: center;
+  }
+  .evo__month { margin: 3rem 0 2rem; }
 }
-.evomap .em-listview h3 {
-  margin: 0 0 var(--sp-4, 1rem);
-  font-size: clamp(1.125rem, 1rem + .5vw, 1.4375rem);
-  padding-top: var(--sp-4, 1rem);
-  border-top: var(--em-rule-heavy) solid var(--em-ink);
+
+@media (max-width: 61.99rem) {
+  .evo__road { padding-left: 1.25rem; }
+  .evo__road::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-left: 2px solid var(--evo-rule);
+  }
+  .evo__line { display: none; }
+  .evo__plan { max-width: none; }
 }
-.evomap .em-listview ol { margin: 0 0 var(--sp-6, 2rem); padding: 0; list-style: none; }
-.evomap .em-listview > ol > li {
-  padding: var(--sp-4, 1rem) 0;
-  border-bottom: var(--em-rule) solid var(--em-graphite-2);
-}
-.evomap .em-lrow {
+
+/* ------------------------------------------------------------- RECORD -- */
+/* The full record opens on drafting stock: it is long-form reading, and the
+   blueprint ground is for the map, not for paragraphs.                     */
+
+.evo__sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
   display: grid;
-  gap: .15rem var(--sp-4, 1rem);
-  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding: clamp(.75rem, 3vw, 2.5rem);
+  background: rgba(8, 22, 16, .72);
 }
-@media (min-width: 48rem) {
-  .evomap .em-lrow { grid-template-columns: 7.5rem minmax(0, 1fr); }
+.evo__sheet[hidden] { display: none; }
+.evo__sheetcard {
+  position: relative;
+  width: min(62rem, 100%);
+  max-height: min(86vh, 54rem);
+  overflow-y: auto;
+  background: var(--white);
+  color: var(--black);
+  border-radius: var(--evo-r);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  font-size: var(--text-sm);
 }
-.evomap .em-lrow__date {
-  font: var(--em-fld);
-  letter-spacing: var(--em-lsp);
-  text-transform: uppercase;
-  color: var(--em-leaf-700);
-  padding-top: .25rem;
+.evo__close {
+  position: absolute; top: .75rem; right: .75rem;
+  width: 2rem; height: 2rem;
+  display: grid; place-items: center;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  color: var(--gray-600);
+  border-radius: 2px;
+  font: inherit; font-size: 1rem; line-height: 1;
+  cursor: pointer;
 }
-.evomap .em-lrow h4 { margin: 0 0 .3rem; font-size: 1.0625rem; }
-.evomap .em-lrow h4 i { font-style: normal; color: var(--em-graphite); font-weight: 600; }
-.evomap .em-lrow p { margin: 0 0 .5rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; max-width: 68ch; }
-.evomap .em-lrow .em-areas { margin-bottom: .5rem; }
-.evomap .em-lmeta {
-  font-size: var(--text-xs, .8125rem);
-  color: var(--em-graphite);
-}
-.evomap .em-lthread {
-  margin: .35rem 0 .5rem;
-  padding-left: .75rem;
-  border-left: var(--em-rule) solid var(--em-leaf-500);
-  font-size: var(--text-sm, .9375rem);
-  line-height: 1.5;
-  color: var(--em-ink-2);
-}
+.evo__close:hover { background: var(--leaf-900); border-color: var(--leaf-900); color: #ffffff; }
 
-/* ============================================================== PRINT ===== */
+.evo__sheetcard h3 { margin: .2rem 0 .1rem; color: var(--leaf-900); font-size: 1.35rem; }
+.evo__sheetcard h4 {
+  margin: 1.4rem 0 .5rem;
+  font-size: .6875rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gray-500);
+}
+.evo__sheetcard p { margin: 0 0 .7rem; line-height: 1.6; max-width: 76ch; }
+.evo__sheetcard ul { margin: 0 0 .7rem; padding-left: 1.1rem; line-height: 1.55; max-width: 76ch; }
+.evo__sheetcard li + li { margin-top: .3rem; }
+.evo__sheetmeta { color: var(--gray-500); font-size: var(--text-xs); margin-bottom: .9rem; }
+.evo__sheetmeta b { color: var(--leaf-700); font-weight: 650; font-variant-numeric: tabular-nums; }
+
+.evo__ba { display: grid; gap: 1px; background: var(--gray-300); border: 1px solid var(--gray-300); border-radius: 2px; }
+@media (min-width: 48rem) { .evo__ba { grid-template-columns: 1fr 1fr; } }
+.evo__ba > div { background: var(--white); padding: .85rem 1rem 1rem; }
+.evo__ba h5 {
+  margin: 0 0 .4rem;
+  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+}
+.evo__ba .from h5 { color: var(--gray-500); }
+.evo__ba .to h5 { color: var(--leaf-700); }
+.evo__ba ul { margin: 0; padding-left: 1rem; font-size: .875rem; }
+
+.evo__visits { display: grid; gap: 1px; background: var(--gray-300); border: 1px solid var(--gray-300); border-radius: 2px; margin-bottom: .9rem; }
+@media (min-width: 48rem) { .evo__visits { grid-template-columns: repeat(var(--n, 2), 1fr); } }
+.evo__visits > div { background: var(--white); padding: .85rem 1rem 1rem; }
+.evo__visits .is-here { background: var(--leaf-50); }
+.evo__visits h5 { margin: 0 0 .35rem; font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--leaf-700); }
+.evo__visits p { font-size: .875rem; margin: 0; }
+.evo__visits button {
+  margin-top: .5rem; appearance: none; border: 0; background: none; padding: 0;
+  font: inherit; font-size: .8125rem; font-weight: 600; color: var(--leaf-700);
+  text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+.evo__deep {
+  margin: 0 0 .9rem;
+  padding: .75rem 1rem;
+  background: var(--leaf-50);
+  border-left: 2px solid var(--leaf-700);
+  line-height: 1.6;
+}
+.evo__shot { margin: 1rem 0 0; }
+.evo__shot img {
+  display: block; width: 100%; max-height: 22rem; object-fit: cover;
+  border: 1px solid var(--gray-300); border-radius: 2px;
+}
+.evo__shot figcaption { margin-top: .4rem; font-size: var(--text-xs); color: var(--gray-500); }
+.evo__links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.evo__links a {
+  font-size: .75rem; font-weight: 600;
+  border: 1px solid var(--gray-300); border-radius: 2px;
+  padding: .35rem .7rem; text-decoration: none; color: var(--leaf-700);
+}
+.evo__links a:hover { border-color: var(--leaf-700); background: var(--leaf-50); }
+.evo__src { margin-top: 1rem; font-size: var(--text-xs); color: var(--gray-500); }
+
+/* ---------------------------------------------------------------- KEY -- */
+
+.evo__key {
+  display: grid;
+  gap: 1.25rem 2rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--evo-rule);
+  color: var(--evo-ink-2);
+  font-size: .8125rem;
+  line-height: 1.55;
+}
+@media (min-width: 48rem) { .evo__key { grid-template-columns: repeat(3, 1fr); } }
+.evo__key h4 {
+  margin: 0 0 .4rem;
+  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: #7f9d8c;
+}
+.evo__key p { margin: 0 0 .4rem; }
+.evo__key b { color: #ffffff; font-weight: 650; }
+
+/* ---------------------------------------------------------------- PRINT -- */
 
 @media print {
-  .evomap .em-controls, .evomap .em-plate, .evomap .em-panel__close { display: none; }
-  .evomap .em-listview { display: block !important; }
-  .evomap .em-panel { border-color: #000; background: #fff; }
+  .sec--evo { background: #ffffff; color: var(--black); margin: 0; width: auto; }
+  .sec--evo::before, .sec--evo::after { display: none; }
+  .evo { color: var(--black); }
+  .evo__card, .evo__plan { background: #ffffff; border-color: #999; color: var(--black); }
+  .evo__who, .evo__plan h3, .sec--evo > h2 { color: var(--black); }
+  .evo__controls, .evo__line, .evo__more { display: none; }
+  .evo__row { display: block; margin-bottom: 1.5rem; }
+  .evo__row > .evo__card { width: auto; }
+  .evo__pill { position: static; width: auto; transform: none; margin: .5rem 0 0; }
 }
