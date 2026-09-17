@@ -1,5 +1,5 @@
 /* =============================================================================
-   ReLeaf: Project Evolution Map — data
+   ReLeaf: Project Evolution Map: data
    -----------------------------------------------------------------------------
    One object, window.EVOMAP, read by evomap.js. Nothing here is rendered
    directly; every string below is content, and every claim in it is traceable
@@ -59,10 +59,12 @@
                lane. approx:true means the sources do not date it and the
                position is a placeholder, drawn dashed and labelled as such.
 
-   loops       [{ id, person, zh, count, visits[], headline, between[], depth,
-                  source }]
+   loops       [{ id, person, zh, count, visits[], headline, between[],
+                  buildIds[], depth, source }]
                A person or organisation we went back to. visits are engagement
-               ids in date order; between[] is what we built in the gap; depth
+               ids in date order; between[] is what we built in the gap, in
+               prose, and buildIds[] names the build records to list with it;
+               depth
                is the one sentence on how the second reading went deeper than
                the first.
 
@@ -95,7 +97,7 @@ window.EVOMAP = (function () {
       note: "Arabidopsis thaliana as the model, grown on agar plates for early control and transferred to soil afterwards. Hydroponics stops being the main system.",
       source: "LOG + ROAD, Prof. Cheng 27 March" },
     { lane: "plant", from: "2026-06-20", by: "e10", label: "Salt dose and timing series",
-      note: "The screen stops testing one condition and starts testing a dose ladder against treatment timing, so the model gets a relationship instead of a point.",
+      note: "The screen stops testing one condition and starts testing a dose ladder against treatment timing, so the model has a dose-response relationship to work from.",
       source: "LOG, Prof. Chen 20 June, Action(New Adapt)" },
     { lane: "plant", from: "2026-08-28", by: "e20", label: "10 to 20 day seedlings, transfer",
       note: "Plants are old enough to have true leaves before stress starts, salt is capped at 200 mM for that age, and treatment is applied by moving plants to fresh plates instead of spraying them.",
@@ -160,7 +162,7 @@ window.EVOMAP = (function () {
       note: "Every model is refined by experimental validation, and the ReLeaf database holds the experimental data that feeds it.",
       source: "LOG, Prof. Chen 20 June" },
     { lane: "model", from: "2026-07-28", by: "e16", label: "Forecast and sensors, run periodically",
-      note: "pH and moisture sensing joins weather forecasting so stress is predicted early, and the reactor runs periodically instead of continuously.",
+      note: "pH and moisture sensing joins weather forecasting so stress is predicted early, and the reactor runs when stress hits, not around the clock.",
       source: "LOG, Prof. Huang 28 July" },
     { lane: "model", from: "2026-08-11", by: "e19", label: "Oxygen measured, not assumed",
       note: "Dissolved oxygen, and possibly OD, enter the parameter set, and the question of whether sensor data can tell one stress from another is written down as a task.",
@@ -348,7 +350,7 @@ window.EVOMAP = (function () {
         "Resting cells, and a cartridge format for the bacteria."
       ],
       before: ["No mechanism for moving protectant out of the membrane", "No valve on any plan"],
-      after: ["A stepper pinch valve posted to the build channel the next day, with a 27 June target", "Monitor flow rate and transmembrane pressure", "Break foam mechanically instead of chemically"],
+      after: ["A stepper pinch valve posted to the build channel the next day, with a 27 June target", "Monitor flow rate and transmembrane pressure", "Break foam with a mechanical bubble breaker"],
       links: [W("Hardware notebook", "../hardware/")],
       source: "LOG + ROAD + HW week 16"
     },
@@ -439,7 +441,7 @@ window.EVOMAP = (function () {
         "Some validation has to move off agar and hydroponics into soil, with a larger sample size."
       ],
       before: ["Sensor to microcontroller to production, delivered by soil pipeline and leaf spray", "Farmers buy the reactor once and replace the bacteria yearly", "Protectant candidates: ACCD, LEA14, BoPep4"],
-      after: ["Prioritise an oxygen sensor and its feedback loop", "Investigate irrigation-integrated delivery instead of a standalone device", "Research GMO regulation in Taiwan, the Philippines, Malaysia and the EU", "Use agricultural waste, such as hay infusion, in the business plan"],
+      after: ["Prioritise an oxygen sensor and its feedback loop", "Investigate delivery through the irrigation system as an alternative to a standalone device", "Research GMO regulation in Taiwan, the Philippines, Malaysia and the EU", "Use agricultural waste, such as hay infusion, in the business plan"],
       links: [W("Hardware notebook", "../hardware/"), W("Entrepreneurship", "../entrepreneurship/")],
       source: "LOG + ROAD"
     },
@@ -457,7 +459,7 @@ window.EVOMAP = (function () {
         "What she wanted was not a device. It was a way to exchange seed."
       ],
       before: [],
-      after: ["Build an online seed exchange platform", "Answer the resilience objection directly instead of arguing past it"],
+      after: ["Build an online seed exchange platform", "Answer the resilience objection directly"],
       photos: [{ src: "farm-tamsui-group.webp", alt: "The team with Ms. Chen at Happy Farm, Tamsui, 21 July 2026." }],
       links: [W("Farmer engagement and the LINE platform", "../human-practices/"), W("Software", "../software/")],
       source: "LOG + ROAD + PLANT"
@@ -524,7 +526,7 @@ window.EVOMAP = (function () {
       summary: "A visit we made because Prof. Chen told us to. Seeing a fully controlled hydroponic system in operation changed what we thought our own growth chamber had to do. Some of the technical data we asked for was not available to us.",
       takeaways: [
         "ReLeaf could grow from detecting stress to detecting nutrient deficiency and supplying what is missing.",
-        "Treating plants as organisms with individual needs, instead of only as economic output, is a different project philosophy and a better one.",
+        "Treating plants as organisms with individual needs is a different project philosophy, and a better one.",
         "Transplanting is itself a stress, so plant transfers during an experiment should be minimised."
       ],
       before: ["An 8/16 light cycle", "Pure oxygen into the growth chamber", "Dissolved oxygen aerated but not measured"],
@@ -576,7 +578,7 @@ window.EVOMAP = (function () {
       where: "Taipei Water Garden Organic Farmers' Market, with Green Media",
       lanes: ["protect", "deploy"],
       suggestion: "Protect on the basis of whether the plant can keep growing under the stress it is in.",
-      summary: "Three speakers, our own project presentation, and then the farmers. Dr. Li spoke for natural farming, Prof. Chen for the engineering view of smart agriculture, and CH Biotech's expert on plant metabolism and homeostasis. All three arrived, independently, at the same boundary: find the balance between growth and defence instead of maximising either.",
+      summary: "Three speakers, our own project presentation, and then the farmers. Dr. Li spoke for natural farming, Prof. Chen for the engineering view of smart agriculture, and CH Biotech's expert on plant metabolism and homeostasis. All three arrived, independently, at the same boundary: find the balance between growth and defence, and stop trying to maximise either.",
       takeaways: [
         "Dr. Li, on natural farming: build an environment in which a plant develops its own resilience to a changing climate, and treat direct intervention as the second option.",
         "Prof. Chen, back for a third time and now as a speaker: keep the balance between intervention and natural resilience, and apply protection according to whether plants can continue growing under a given stress.",
@@ -688,9 +690,9 @@ window.EVOMAP = (function () {
       id: "l-cheng", person: "Prof. Cheng", zh: "鄭梅君", count: 2, visits: ["e02", "e20"],
       headline: "She gave us the seed in March and audited the whole screen in August.",
       between: [
-        { label: "Arabidopsis on plates, and five hydroponic boxes copied from hers", source: "PLANT" },
         { label: "Eight numbered experiment sets, three closed with numbers we would defend", source: "PLANT" }
       ],
+      buildIds: ["b03", "b08"],
       depth: "In March the advice was what to grow and how: Arabidopsis, agar first, soil after, and do not trust hydroponics on its own. In August we brought back a working box and eight sets of data, and the advice turned specific and procedural: plants ten to twenty days old, a 200 mM ceiling, treatment by transfer instead of spray, and a soil ramp that does not wash itself out. The second reading corrected the experiment we had actually run, which the first could not have done.",
       source: "LOG + PLANT"
     },
@@ -698,10 +700,10 @@ window.EVOMAP = (function () {
       id: "l-chen", person: "Prof. Chen", zh: "陳文亮", count: 3, visits: ["e04", "e10", "e22"],
       headline: "He redirected the project in April, audited the loop between model and bench in June, and spoke at our forum in September.",
       between: [
-        { label: "The pivot document, 15 April: contained vessel, light as the instruction", source: "HW" },
-        { label: "Reactor prototypes I and II, and the first stress-to-light demonstration on a bench", source: "HW" },
+        { label: "The first stress-to-light demonstration on a bench, two months after the pivot", source: "HW" },
         { label: "Yes Health iFarm visit on 11 August, which he told us to make", source: "LOG" }
       ],
+      buildIds: ["b01", "b02"],
       depth: "The April meeting was strategic: leave the soil sensor market, contain the organism, sell the consumable. The June visit was methodological: connect the model to the bench, extend the test period, measure dissolved oxygen, and go and see a real hydroponic farm. By September he was on our stage, arguing that protection should be applied according to whether a plant can keep growing under the stress it is in. Three visits, each one a step further inside the project.",
       source: "LOG + HW"
     },
@@ -709,10 +711,10 @@ window.EVOMAP = (function () {
       id: "l-chang", person: "Prof. Chang", zh: "張嘉修", count: 2, visits: ["e09", "e21"],
       headline: "He found the design had no way to get protectant out. Eleven weeks later he saw it come out where it should not.",
       between: [
-        { label: "Stepper pinch valve posted 19 June, replaced by a servo in week 23", source: "HW" },
         { label: "Transmembrane pressure put on a screen, so fouling is visible while a run happens", source: "HW" },
         { label: "Full rig assembled: valve, sensors and photometer as one machine", source: "HW" }
       ],
+      buildIds: ["b04"],
       depth: "The first visit found a hole in the design: there was no mechanism at all for pushing permeate through the membrane, and no valve on any plan. We built one the next day. The second visit met a built machine and a harder problem, protectant and bacteria crossing the membrane with no driving force applied, and it added a requirement the first visit had not raised: a farmer has to be able to operate this, which is where the replaceable capsule and the AIoT control come from.",
       source: "LOG + HW"
     },
@@ -720,10 +722,32 @@ window.EVOMAP = (function () {
       id: "l-sattely", person: "Dr. Sattely", zh: "", count: 2, visits: ["e11", "e25"],
       headline: "In June she doubted the proof of concept. In September, with Prof. Endy, she went after the evidence.",
       between: [
-        { label: "Purified protectant tested directly on plants, sets 7 and 8", source: "PLANT" },
         { label: "A constitutive construct series built so a negative protectant result has one explanation fewer", source: "ENGINEERING" }
       ],
+      buildIds: ["b07", "b08"],
       depth: "June was about scope: prove one protectant on one stress properly, write down the milestones, and consider peptides. September was about proof: separate the engineered organism from the delivered protectant, verify ACCD at protein and RNA level, and add the controls that rule out the alternatives. The first reading told us what to build; the second told us what our results were allowed to claim.",
+      source: "LOG"
+    },
+    {
+      id: "l-chbio", person: "CH Biotech", zh: "正瀚生技", count: 2, visits: ["e13", "e22"],
+      headline: "We consulted them in July about delivery and regulation, and in September their expert spoke at our forum.",
+      between: [
+        { label: "Their peptide 富肽2號 went onto our bench at 1:500", source: "PLANT" },
+        { label: "Regulatory research on biostimulants and GMOs in Taiwan", source: "LOG" }
+      ],
+      buildIds: ["b07"],
+      depth: "In July the conversation was ours to ask: which delivery method, what cost per area, what the regulator wants. In September their expert made the same argument to a room of farmers, and framed it as metabolism and homeostasis: the goal is balance between growth and defence. The advice arrived once as a company consultation and once as public teaching, and the second form is the one the farmers could use.",
+      source: "LOG + PLANT"
+    },
+    {
+      id: "l-greenmedia", person: "Green Media", zh: "", count: 2, visits: ["e12", "e22"],
+      headline: "A July meeting about how stakeholders see farming, and a September event co-hosted with them.",
+      between: [
+        { label: "The forum was restructured so every participant speaks, not only the invited experts", source: "LOG" },
+        { label: "Six booths designed for the market crowd, with a KAP survey behind each", source: "LOG" }
+      ],
+      buildIds: [],
+      depth: "The July meeting changed the format before the event existed: different backgrounds hold different views of farming, so a panel of experts talking at an audience would have missed the farmers. In September the event ran at the market alongside their own coffee and cocoa programme, and the discussion session they argued for is where the two farmer questions came from.",
       source: "LOG"
     },
     {
@@ -732,6 +756,7 @@ window.EVOMAP = (function () {
       between: [
         { label: "Electroporation reworked around dense pellets and larger DNA, with control groups added", source: "LOG" }
       ],
+      buildIds: [],
       depth: "The July call was about when to act: seedling stage, thresholds, periodic operation instead of continuous. The August visit was about what counts as success: protein quantity, identity, solubility and function evaluated together, because secretion on its own proves nothing if the protein is inactive. The second meeting moved the standard of evidence, not the plan.",
       source: "LOG"
     }
@@ -749,27 +774,19 @@ window.EVOMAP = (function () {
       note: "There was no valve on any plan before we spoke to him. The design was posted to the build channel the following day.",
       source: "HW week 16" },
     { id: "c03", from: { type: "engagement", id: "e10" }, to: { type: "engagement", id: "e19" },
-      label: "sent us to Yes Health iFarm",
+      label: "sent us to Yes Health",
       note: "He suggested the visit in June to help us understand hydroponic deployment. We went on 11 August.",
       source: "LOG" },
     { id: "c04", from: { type: "engagement", id: "e13" }, to: { type: "build", id: "b07" },
       label: "peptide onto the bench",
       note: "富肽2號 came back from CH Biotech and became experiment set 7 at 1:500 in the plate.",
       source: "PLANT" },
-    { id: "c05", from: { type: "engagement", id: "e13" }, to: { type: "engagement", id: "e22" },
-      label: "spoke at our forum",
-      note: "Two months after the consultation, a CH Biotech expert was one of the three speakers at the forum, on plant metabolism and homeostasis.",
-      source: "LOG" },
-    { id: "c06", from: { type: "engagement", id: "e12" }, to: { type: "engagement", id: "e22" },
-      label: "co-hosted the event",
-      note: "The July meeting shaped the format, and the September event ran alongside Green Media's own coffee and cocoa event at the market.",
-      source: "LOG" },
-    { id: "c07", from: { type: "engagement", id: "e15" }, to: { type: "build", id: "b06" },
+            { id: "c07", from: { type: "engagement", id: "e15" }, to: { type: "build", id: "b06" },
       label: "asked for seed exchange",
       note: "She suggested a way for growers to exchange seed. The platform was prototyped two days later.",
       source: "LOG + PLANT" },
     { id: "c08", from: { type: "engagement", id: "e06" }, to: { type: "build", id: "b05" },
-      label: "farmers could not reach the information",
+      label: "led to the LINE assistant",
       note: "The expo interviews and Ms. Chen's visit together are why the LINE assistant exists.",
       source: "LOG" },
     { id: "c09", from: { type: "engagement", id: "e20" }, to: { type: "build", id: "b08" },

@@ -1,5 +1,5 @@
 /* =============================================================================
-   ReLeaf: Project Evolution Map — styles
+   ReLeaf: Project Evolution Map: styles
    -----------------------------------------------------------------------------
    Everything is scoped under .evomap. No global element is restyled, and no
    token in tokens.css is redefined; the drawing-set colours from DESIGN.md are
@@ -85,6 +85,10 @@
   border-right: var(--em-rule) solid var(--em-graphite-2);
 }
 .evomap .em-tally > div:last-child { border-right: 0; }
+@media (max-width: 47.99rem) {
+  .evomap .em-tally > div:nth-child(2n) { border-right: 0; }
+  .evomap .em-tally > div:nth-child(-n+2) { border-bottom: var(--em-rule) solid var(--em-graphite-2); }
+}
 .evomap .em-tally dt {
   font: var(--em-fld);
   letter-spacing: var(--em-lsp);
@@ -210,6 +214,12 @@
   color: var(--em-plate-ink-muted);
 }
 @media (min-width: 78rem) { .evomap .em-hint--scroll { display: none; } }
+.evomap .em-hint--note {
+  font: 400 var(--text-xs, .8125rem)/1.5 var(--font-body, Inter, sans-serif);
+  letter-spacing: normal;
+  text-transform: none;
+  max-width: 68ch;
+}
 
 /* ------------------------------------------------------- SVG PRIMITIVES -- */
 
@@ -257,6 +267,11 @@
 .evomap .em-build-label { fill: var(--em-plate-ink-muted); font-size: 10px; }
 
 .evomap .em-loop-arc { fill: none; stroke: var(--em-leaf-500); stroke-width: 1.2; }
+.evomap .em-loop { cursor: pointer; }
+.evomap .em-loop:focus { outline: none; }
+.evomap .em-loop:hover .em-loop-arc,
+.evomap .em-loop:focus-visible .em-loop-arc { stroke: var(--em-plate-node); stroke-width: 2; }
+.evomap .em-loop:focus-visible .em-loop-chip { stroke: #fff; stroke-width: 1.5; }
 .evomap .em-loop-label {
   fill: var(--em-plate-node);
   font: var(--em-fld);
@@ -281,6 +296,18 @@
 .evomap .em-chain-head { fill: var(--em-amber); }
 .evomap .em-chain-label { fill: var(--em-amber); font-size: 10px; }
 
+/* A halo in the plate colour keeps a label legible where a stitch or a month
+   rule runs through it. It is the ground, not a shadow. */
+.evomap .em-state-label,
+.evomap .em-build-label,
+.evomap .em-chain-label,
+.evomap .em-lane-name {
+  paint-order: stroke;
+  stroke: var(--em-blue-900);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
 /* node hit target and its states */
 .evomap .em-node { cursor: pointer; }
 .evomap .em-node__hit { fill: transparent; }
@@ -294,7 +321,7 @@
 .evomap .em-node:focus-visible .em-mark { fill: var(--em-plate-node); }
 .evomap .em-node:hover .em-stitch,
 .evomap .em-node:focus-visible .em-stitch { stroke: var(--em-plate-node); }
-.evomap .em-node:focus-visible { outline: none; }
+.evomap .em-node:focus, .evomap .em-node:focus-visible { outline: none; }
 .evomap .em-node:focus-visible .em-node__ring { stroke: var(--em-leaf-500); stroke-width: 2; }
 .evomap .em-node__ring { fill: none; stroke: none; }
 .evomap .em-node.is-sel .em-mark { fill: #fff; }
@@ -483,6 +510,12 @@
 @media (min-width: 52rem) { .evomap .em-cmp__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .evomap .em-cmp__grid > div { background: var(--em-vellum); padding: .85rem 1rem 1.1rem; }
 .evomap .em-cmp__grid > div.is-mid { background: var(--em-paper-2); }
+.evomap .em-cmp__mid {
+  margin-top: 1px;
+  background: var(--em-graphite-2);
+  padding-top: 1px;
+}
+.evomap .em-cmp__mid > div { background: var(--em-paper-2); padding: .85rem 1rem 1.1rem; }
 .evomap .em-cmp h6 {
   margin: 0 0 .45rem;
   font: var(--em-fld);

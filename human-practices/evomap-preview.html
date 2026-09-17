@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evolution Map Preview</title>
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/page.css">
+  <link rel="stylesheet" href="evomap.css">
+  <style>
+    /* preview frame only: a drafting-stock sheet, capped the way a wiki sheet is */
+    body { background: #f6f6f2; }
+    .preview-sheet { max-width: 1440px; margin: 0 auto; padding: 2.5rem clamp(1rem, .5rem + 2vw, 2.75rem) 4rem; }
+    .preview-sheet h1 { font-size: 1.5rem; color: #14402b; margin: 0 0 .25rem; }
+    .preview-sheet > p { margin: 0 0 1.5rem; color: #3d4a43; max-width: 68ch; }
+  </style>
+</head>
+<body>
+  <main class="preview-sheet">
+    <h1>Project Evolution Map</h1>
+    <p>Standalone check page for the component. The Human Practices page mounts the same three files into the same element.</p>
+
+    <!-- DATE FLAG: the interview log's table lists the Public Forum as 2026/09/04,
+         while its own narrative and the booth write-up both say 5 September 2026.
+         The map uses 5 September (engagement e22 in evomap-data.js). -->
+    <div id="evomap" data-evomap>
+      <noscript><p>The Project Evolution Map needs JavaScript. Every engagement it draws is also written out in the sections below.</p></noscript>
+    </div>
+  </main>
+
+  <script src="evomap-data.js"></script>
+  <script src="evomap.js"></script>
+</body>
+</html>
