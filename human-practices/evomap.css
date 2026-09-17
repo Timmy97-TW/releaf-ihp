@@ -1,40 +1,32 @@
 /* =============================================================================
    ReLeaf: Project Evolution Map
    -----------------------------------------------------------------------------
-   The page's special section. It takes the layout of the team's own roadmap
-   draft (a road down the page, engagement cards alternating either side of it,
-   and a decision pill on the road between them) and puts it on the blueprint
-   ground the engineering atlas uses. The page fades into that ground as the
-   section arrives and back out of it afterwards.
+   The page's special section, and the only one that takes the whole window: the
+   contents rail steps out of the way while it is on screen. White ground, the
+   same as the rest of the page.
 
-   Rendered entirely by evomap.js from evomap-data.js. Nothing here styles
-   anything outside .sec--evo, except the two rules that invert the contents
-   rail while the dark band fills the screen.
+   A judge should be able to read it without a long scroll, so the arc is stated
+   once at the top (where we started, where it ended), the engagements are a
+   two-column grid of compact cards carrying the face of the person we met and
+   thumbnails of what changed, and the full record with its evidence opens from
+   the card.
+
+   Rendered by evomap.js from evomap-data.js.
    ========================================================================== */
 
 .evo {
-  /* the blueprint ground, from the engineering atlas */
-  --evo-ground:  #0c231a;
-  --evo-strip:   #10301f;
-  --evo-card:    #16412c;
-  --evo-ink:     #e7f0ea;
-  --evo-ink-2:   #a9c3b5;
-  --evo-rule:    rgba(180, 215, 195, .26);
-  --evo-rule-2:  rgba(180, 215, 195, .5);
-  --evo-leaf:    #7cc49a;
-  --evo-amber:   #d6b078;
-  --evo-rust:    #d8734c;
-  --evo-r:       3px;
+  --evo-line:  var(--gray-300);
+  --evo-hair:  var(--gray-200);
+  --evo-ink-2: var(--gray-600);
+  --evo-ink-3: var(--gray-500);
+  --evo-r:     3px;
 }
 
 /* ------------------------------------------------------------ THE BAND -- */
-/* Full bleed out of the page column, with a gradient at each end so the
-   drafting stock turns into blueprint instead of meeting it at a line.     */
 
 .sec--evo {
-  /* Full bleed, measured rather than assumed: 100vw includes the vertical
-     scrollbar, which would push the page sideways by its width. evomap.js
-     writes the real client width into --evo-vw and keeps it current. */
+  /* Full bleed, measured rather than assumed: 100vw counts the scrollbar, and
+     the reading column is inset from the page edge by the rail. */
   --vw: var(--evo-vw, 100vw);
   position: relative;
   margin-left: calc(-1 * var(--evo-left, 0px));
@@ -42,394 +34,221 @@
   width: var(--vw);
   max-width: var(--vw);
   padding: 0;
-  background: var(--evo-ground, #0c231a);
-  color: #e7f0ea;
-  overflow: clip;
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
 }
 .ihp .sec--evo + .sec { margin-top: var(--sp-8); }
 
-.sec--evo::before,
-.sec--evo::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: clamp(3rem, 6vw, 6rem);
-  pointer-events: none;
-  z-index: 2;
-}
-.sec--evo::before { top: 0;    background: linear-gradient(to bottom, var(--white) 0%, rgba(12, 35, 26, .55) 55%, rgba(12, 35, 26, 0) 100%); }
-.sec--evo::after  { bottom: 0; background: linear-gradient(to top,    var(--white) 0%, rgba(12, 35, 26, .55) 55%, rgba(12, 35, 26, 0) 100%); }
-
-/* the section's own heading and standfirst, set on the dark ground */
 .sec--evo > h2,
 .sec--evo > .stand {
-  position: relative;
-  z-index: 3;
-  max-width: 1180px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
   padding-left: clamp(1rem, 4vw, 3rem);
   padding-right: clamp(1rem, 4vw, 3rem);
 }
-.sec--evo > h2 {
-  padding-top: clamp(4.5rem, 10vw, 9rem);
-  color: #ffffff;
-}
-.sec--evo > h2 .sec__no { color: var(--evo-leaf); }
-.sec--evo > .stand { color: var(--evo-ink-2); }
-.sec--evo > .stand b { color: #ffffff; }
+.sec--evo > h2 { padding-top: clamp(2.5rem, 5vw, 4rem); }
+.ihp .pagebody .sec--evo > .stand { max-width: 1240px; }
 
-/* While the band fills the screen the page behind it goes dark too, so the
-   margins and the contents rail belong to the same picture. */
-/* The band is full bleed, so the rail would be underneath it. Lift the rail
-   instead and let it read in pale ink over the blueprint: the section takes
-   the whole window and the reader keeps their place in the page. */
-.ihp .toc { z-index: 30; }
-
-html.evo-dark body { background: #0c231a; }
-html.evo-dark .ihp .toc { color: #cfe0d6; }
-html.evo-dark .ihp .toc .toc__list { border-left-color: rgba(180, 215, 195, .25); }
-html.evo-dark .ihp .toc .toc__list a { color: #9fbdac; }
-html.evo-dark .ihp .toc .toc__list a:hover { color: #ffffff; background: rgba(231, 240, 234, .08); }
-html.evo-dark .ihp .toc .toc__list a.is-active { color: #ffffff; border-left-color: #7cc49a; }
-html.evo-dark .ihp .toc .toc__list .is-sub a { color: #86a493; }
-html.evo-dark .ihp .toc .toc__list .is-sub a.is-active { color: #ffffff; }
-html.evo-dark .ihp .toc__title { color: #7f9d8c; }
-html.evo-dark .ihp .toc > summary { color: #cfe0d6; }
-@media (max-width: 1039px) {
-  html.evo-dark .ihp .toc { background: #10301f; border-color: rgba(180, 215, 195, .25); }
-}
+/* The rail belongs to the reading page, and this section is not that. */
+html.evo-open .ihp .toc { opacity: 0; visibility: hidden; pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
-  body { transition: background-color .5s ease; }
-  html.evo-dark .ihp .toc,
-  html.evo-dark .ihp .toc .toc__list a { transition: color .5s ease, border-color .5s ease; }
+  .ihp .toc { transition: opacity .35s ease, visibility .35s ease; }
 }
 
 /* ----------------------------------------------------------- THE FRAME -- */
-/* page.css colours headings and prose for the drafting-stock ground. On the
-   blueprint band every one of them inherits from the band instead, so these
-   rules carry the specificity to say so once. */
-
-.ihp .pagebody .sec--evo > .stand { max-width: 1180px; }
-.sec--evo .evo h3,
-.sec--evo .evo h4,
-.sec--evo .evo h5 { color: inherit; font-size: inherit; margin: 0; }
-.sec--evo .evo__sheetcard h3 { color: var(--leaf-900); font-size: 1.35rem; margin: .2rem 0 .1rem; }
-.sec--evo .evo__sheetcard h4 { color: var(--gray-500); font-size: .6875rem; margin: 1.4rem 0 .5rem; }
-.sec--evo .evo__sheetcard h5 { font-size: .625rem; margin: 0 0 .4rem; }
-.sec--evo .evo__sheetcard p,
-.sec--evo .evo__sheetcard li { color: var(--black); }
-.sec--evo .evo__sheetcard .evo__sheetmeta,
-.sec--evo .evo__sheetcard .evo__src,
-.sec--evo .evo__sheetcard figcaption { color: var(--gray-500); }
-.sec--evo .evo p,
-.sec--evo .evo li,
-.sec--evo .evo ul { color: inherit; max-width: none; }
-.sec--evo .evo a { color: var(--evo-leaf); }
 
 .evo {
-  position: relative;
-  z-index: 3;
-  max-width: 1180px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 10vw, 9rem);
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 3rem) clamp(3rem, 6vw, 5rem);
   font-size: var(--text-sm);
-  color: var(--evo-ink);
 }
-.evo *:focus-visible { outline: 2px solid var(--evo-leaf); outline-offset: 2px; }
+.evo *:focus-visible { outline: 2px solid var(--leaf-500); outline-offset: 2px; }
+.sec--evo .evo h3, .sec--evo .evo h4, .sec--evo .evo h5 { margin: 0; font-size: inherit; color: inherit; }
+.sec--evo .evo p, .sec--evo .evo li, .sec--evo .evo ul { max-width: none; }
 
-/* ------------------------------------------------------------- CONTROLS -- */
+/* ----------------------------------------------------------- THE ARC --- */
+/* Start and end states side by side at the top: the whole journey in two
+   boxes before a single card is read. */
+
+.evo__arc {
+  display: grid;
+  gap: 1px;
+  background: var(--evo-line);
+  border: 1px solid var(--evo-line);
+  border-radius: var(--evo-r);
+  margin: 0 0 var(--sp-5);
+  overflow: hidden;
+}
+@media (min-width: 52rem) { .evo__arc { grid-template-columns: 1fr 1fr; } }
+.evo__arc > div { background: var(--white); padding: var(--sp-4) var(--sp-5) var(--sp-5); }
+.evo__arc .is-end { background: var(--leaf-50); }
+.evo__label {
+  display: inline-block;
+  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--amber-700); margin-bottom: .5rem;
+}
+.evo__arc .is-end .evo__label { color: var(--leaf-700); }
+.sec--evo .evo__arc h3 { font-size: 1.0625rem; font-weight: 700; color: var(--leaf-900); line-height: 1.3; margin-bottom: .3rem; }
+.evo__arc p { margin: 0; color: var(--evo-ink-2); line-height: 1.55; max-width: 60ch; }
+
+/* ------------------------------------------------------------ CONTROLS -- */
 
 .evo__controls {
   position: sticky;
   top: calc(var(--nav-h) - 1px);
   z-index: 40;
-  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
-  padding: .85rem 0;
-  background: var(--evo-ground);
-  border-bottom: 1px solid var(--evo-rule);
+  margin: 0 0 var(--sp-4);
+  padding: .7rem 0;
+  background: rgb(255 255 255 / .94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--gray-200);
 }
-.evo__filters { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.evo__row1, .evo__row2 { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.evo__row2 { margin-top: .45rem; }
 .evo__flabel {
-  font-size: .625rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: #7f9d8c; margin-right: .35rem;
+  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--evo-ink-3); margin-right: .3rem;
 }
 .evo__chip {
   appearance: none;
-  border: 1px solid var(--evo-rule-2);
-  background: transparent;
-  color: #cfe0d6;
+  border: 1px solid var(--evo-line);
+  background: var(--white);
+  color: var(--gray-700);
   border-radius: 999px;
-  padding: .4rem .85rem;
-  font: inherit;
-  font-size: .78rem;
-  font-weight: 500;
+  padding: .35rem .8rem;
+  font: inherit; font-size: .78rem; font-weight: 500;
   cursor: pointer;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  transition: border-color .14s ease, color .14s ease, background-color .14s ease;
 }
-.evo__chip:hover { border-color: #ffffff; color: #ffffff; }
-.evo__chip[aria-pressed="true"] { background: #d8ece0; border-color: #d8ece0; color: #0c231a; font-weight: 600; }
-.evo__chip--thread[aria-pressed="true"] { background: var(--evo-leaf); border-color: var(--evo-leaf); }
-.evo__count {
-  margin-left: auto;
-  font-size: .72rem;
-  color: #7f9d8c;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+.evo__chip:hover { border-color: var(--leaf-700); color: var(--leaf-900); }
+.evo__chip[aria-pressed="true"] { background: var(--leaf-900); border-color: var(--leaf-900); color: var(--white); font-weight: 600; }
+.evo__chip--thread[aria-pressed="true"] { background: var(--leaf-700); border-color: var(--leaf-700); }
+.evo__jump {
+  appearance: none; border: 0; background: none; padding: .2rem .45rem;
+  font: inherit; font-size: .75rem; font-weight: 600; color: var(--gray-600);
+  cursor: pointer; border-bottom: 2px solid transparent;
 }
+.evo__jump:hover { color: var(--leaf-900); border-bottom-color: var(--leaf-500); }
+.evo__count { margin-left: auto; font-size: .72rem; color: var(--evo-ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-/* --------------------------------------------------------- STATE BOXES -- */
-
-.evo__plan {
-  position: relative;
-  z-index: 12;
-  border: 1px solid var(--evo-rule);
-  border-radius: var(--evo-r);
-  background: var(--evo-strip);
-  padding: 1.1rem 1.3rem 1.25rem;
-  max-width: 44rem;
-}
-.evo__plan--end { margin-left: auto; }
-.evo__label {
-  display: inline-block;
-  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  padding: .2rem .5rem;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  margin-bottom: .6rem;
-}
-.evo__plan--start .evo__label { color: var(--evo-amber); }
-.evo__plan--end .evo__label { color: var(--evo-leaf); }
-.sec--evo .evo__plan h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: #ffffff; line-height: 1.3; }
-.evo__plan p { margin: 0; color: var(--evo-ink-2); line-height: 1.6; max-width: 62ch; }
-
-/* --------------------------------------------------------------- ROAD -- */
-
-.evo__road { position: relative; padding: 1.5rem 0 .5rem; }
-.evo__line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-.evo__line path { fill: none; }
-.evo__line .rd { stroke: var(--evo-rule-2); stroke-width: 2; }
-.evo__line .rd--dim { stroke: rgba(180, 215, 195, .16); }
-.evo__line .thread { stroke: var(--evo-leaf); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
-.evo__line .dot { fill: var(--evo-ground); stroke: var(--evo-rule-2); stroke-width: 2; }
+/* --------------------------------------------------------------- MONTH -- */
 
 .evo__month {
-  position: relative;
-  z-index: 8;
-  display: flex;
-  align-items: center;
-  gap: .9rem;
-  margin: 2.25rem 0 1.5rem;
+  display: flex; align-items: baseline; gap: .75rem;
+  margin: var(--sp-6) 0 var(--sp-3);
+  scroll-margin-top: calc(var(--nav-h) + 6rem);
 }
-.evo__month span {
-  font-size: .6875rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: #8fae9d;
-  font-variant-numeric: tabular-nums;
+.evo__month[hidden] { display: none; }
+.evo__month b {
+  font-size: .6875rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--leaf-900); font-variant-numeric: tabular-nums;
 }
-.evo__month::after { content: ""; flex: 1; border-bottom: 1px solid var(--evo-rule); }
-.evo__month[hidden] { display: none; }   /* the attribute alone loses to display:flex */
+.evo__month span { font-size: var(--text-xs); color: var(--evo-ink-3); }
+.evo__month::after { content: ""; flex: 1; border-bottom: 1px solid var(--gray-200); }
 
-/* one engagement */
-.evo__row { position: relative; z-index: 5; margin-bottom: 2rem; }
-.evo__row[hidden] { display: none; }
+/* ---------------------------------------------------------------- GRID -- */
+
+.evo__grid { display: grid; gap: var(--sp-4); align-items: stretch; }
+@media (min-width: 52rem)  { .evo__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 100rem) { .evo__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* ---------------------------------------------------------------- CARD -- */
 
 .evo__card {
-  position: relative;
-  z-index: 10;
-  background: var(--evo-card);
-  border: 1px solid var(--evo-rule);
+  display: flex; flex-direction: column; gap: .7rem;
+  width: 100%; margin: 0;
+  padding: var(--sp-4);
+  text-align: left; font: inherit; color: inherit;
+  background: var(--white);
+  border: 1px solid var(--evo-line);
   border-radius: var(--evo-r);
-  padding: 1.1rem 1.25rem 1.25rem;
-  transition: border-color .15s ease, transform .15s ease;
+  cursor: pointer;
+  transition: border-color .14s ease, background-color .14s ease;
 }
-.evo__card:hover { border-color: var(--evo-rule-2); }
-.evo__row--thread .evo__card { border-color: rgba(124, 196, 154, .55); }
-.evo__row--pending .evo__card { border-style: dashed; }
+.evo__card[hidden] { display: none; }
+.evo__card:hover { border-color: var(--leaf-700); background: var(--leaf-50); }
+.evo__card:hover .evo__open { color: var(--leaf-900); }
+.evo__card--thread { border-left: 3px solid var(--leaf-700); }
+.evo__card--pending { border-style: dashed; }
 
-.evo__meta {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .75rem;
-  margin-bottom: .5rem;
+.evo__head { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .75rem; align-items: center; }
+.evo__face {
+  width: 3rem; height: 3rem;
+  border-radius: 50%; object-fit: cover;
+  background: var(--gray-100); border: 1px solid var(--evo-line);
 }
-.evo__date {
-  font-size: .6875rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--evo-leaf); font-variant-numeric: tabular-nums;
+.evo__face--none {
+  display: grid; place-items: center;
+  font-size: .8125rem; font-weight: 700; color: var(--leaf-700); background: var(--leaf-50);
 }
-.evo__no {
-  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: #7f9d8c; font-variant-numeric: tabular-nums;
+.evo__who { font-size: 1rem; font-weight: 700; color: var(--leaf-900); line-height: 1.25; }
+.evo__who i { font-style: normal; font-weight: 600; color: var(--gray-600); }
+.evo__sub {
+  margin-top: .1rem;
+  font-size: var(--text-xs); color: var(--evo-ink-3); line-height: 1.35;
+  display: flex; flex-wrap: wrap; gap: .3rem .5rem; align-items: baseline;
 }
-.evo__kind {
-  font-size: .625rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: #8fae9d; border: 1px solid var(--evo-rule); border-radius: 2px; padding: .15rem .4rem;
+.evo__date { font-weight: 700; color: var(--leaf-700); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.evo__visit {
+  font-size: .625rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--leaf-700); border: 1px solid var(--leaf-500); border-radius: 999px; padding: .1rem .45rem;
 }
-.sec--evo .evo__who { margin: 0 0 .15rem; font-size: 1.0625rem; font-weight: 700; color: #ffffff; line-height: 1.25; }
-.evo__who i { font-style: normal; color: var(--evo-ink-2); font-weight: 500; }
-.evo__role { margin: 0 0 .75rem; color: #8fae9d; font-size: .8125rem; line-height: 1.45; }
-
-.evo__areas { display: flex; flex-wrap: wrap; gap: .3rem; margin: 0 0 .85rem; padding: 0; list-style: none; }
-.evo__areas li {
-  font-size: .625rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  color: #bcd4c6; border: 1px solid var(--evo-rule); border-radius: 999px; padding: .2rem .55rem;
-}
-
 .evo__said {
-  margin: 0 0 .85rem;
-  padding: .7rem .9rem;
-  border-left: 2px solid var(--evo-amber);
-  background: rgba(214, 176, 120, .09);
-  border-radius: 0 var(--evo-r) var(--evo-r) 0;
-  color: #f0e6d5;
-  line-height: 1.55;
+  margin: 0;
+  font-size: .8125rem; line-height: 1.5; color: var(--gray-700);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.evo__said b {
+.evo__said b { color: var(--gray-500); font-weight: 700; font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; }
+
+.evo__thumbs { display: flex; gap: .3rem; }
+.evo__thumbs img {
+  width: 4.5rem; height: 3.2rem; object-fit: cover;
+  border: 1px solid var(--gray-200); border-radius: 2px; background: var(--gray-100);
+}
+.evo__thumbs span {
+  display: grid; place-items: center;
+  width: 2.4rem; height: 3.2rem;
+  font-size: .6875rem; font-weight: 700; color: var(--gray-500);
+  border: 1px dashed var(--gray-200); border-radius: 2px;
+}
+
+.evo__foot {
+  display: flex; align-items: flex-start; gap: .5rem;
+  margin-top: auto; padding-top: .6rem;
+  border-top: 1px solid var(--gray-200);
+}
+.evo__changed { flex: 1; font-size: .8125rem; line-height: 1.45; color: var(--leaf-900); }
+.evo__changed b {
   display: block;
   font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--evo-amber); margin-bottom: .25rem;
+  color: var(--leaf-700); margin-bottom: .1rem;
 }
-
-.evo__points { margin: 0 0 .9rem; padding-left: 1rem; color: var(--evo-ink-2); line-height: 1.55; }
-.evo__points li + li { margin-top: .3rem; }
-
-.evo__foot { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-.evo__more {
-  appearance: none;
-  border: 1px solid var(--evo-rule-2);
-  background: transparent;
-  color: #dff0e6;
-  border-radius: var(--evo-r);
-  padding: .4rem .8rem;
-  font: inherit; font-size: .75rem; font-weight: 600;
-  cursor: pointer;
-  transition: background-color .15s ease, color .15s ease;
-}
-.evo__more:hover { background: #d8ece0; color: #0c231a; }
-
-/* the return-visit ribbon */
-.evo__thread {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
-  margin: -.15rem 0 .8rem;
-  padding: .45rem .7rem;
-  background: rgba(124, 196, 154, .12);
-  border: 1px solid rgba(124, 196, 154, .4);
-  border-radius: var(--evo-r);
-}
-.evo__thread b {
-  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--evo-leaf);
-}
-.evo__thread span { color: #cfe0d6; font-size: .78rem; }
-.evo__thread button {
-  appearance: none; border: 0; background: none; padding: 0;
-  font: inherit; font-size: .78rem; font-weight: 600; color: var(--evo-leaf);
-  text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
-}
-
-/* what we built between two visits, shown on the road */
-.evo__built {
-  margin: .8rem 0 0;
-  padding: .7rem .9rem;
-  border: 1px dashed var(--evo-rule-2);
-  border-radius: var(--evo-r);
-  background: rgba(231, 240, 234, .04);
-}
-.evo__built b {
-  display: block;
-  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: #8fae9d; margin-bottom: .35rem;
-}
-.evo__built ul { margin: 0; padding-left: 1rem; color: var(--evo-ink-2); line-height: 1.5; }
-.evo__built li + li { margin-top: .25rem; }
-
-/* the decision pill that sits on the road under a card */
-.evo__pill {
-  position: relative;
-  z-index: 12;
-  display: block;
-  width: 100%;
-  margin: .9rem 0 0;
-  padding: .55rem .9rem;
-  text-align: left;
-  background: var(--evo-strip);
-  border: 1px solid var(--evo-rule-2);
-  border-radius: 999px;
-  font: inherit;
-  cursor: pointer;
-  transition: border-color .15s ease, background-color .15s ease;
-}
-.evo__pill:hover { border-color: var(--evo-leaf); background: #143826; }
-.evo__pill b {
-  display: block;
-  font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--evo-leaf); margin-bottom: .1rem;
-}
-.evo__pill span { display: block; color: #dff0e6; font-size: .8125rem; line-height: 1.4; }
+.evo__open { flex-shrink: 0; font-size: var(--text-xs); font-weight: 700; color: var(--gray-500); white-space: nowrap; }
 
 .evo__empty {
-  margin: 2rem 0;
-  padding: 1.25rem;
-  border: 1px dashed var(--evo-rule);
-  border-radius: var(--evo-r);
-  color: var(--evo-ink-2);
-  text-align: center;
+  margin: var(--sp-6) 0; padding: var(--sp-5);
+  border: 1px dashed var(--evo-line); border-radius: var(--evo-r);
+  color: var(--evo-ink-2); text-align: center;
 }
 
-/* ------------------------------------------------------- DESKTOP ROAD -- */
-/* From 62rem the cards alternate either side of a curving road, which is the
-   shape of the team's own roadmap draft. Below that they stack in one column
-   against a straight spine, because a curve needs width to be legible.     */
-
-@media (min-width: 62rem) {
-  .evo__road { padding: 2.5rem 0 1rem; }
-  .evo__row { display: flex; margin-bottom: 6rem; }
-  .evo__row > .evo__card { width: 45%; }
-  .evo__row--right { justify-content: flex-end; }
-  .evo__row--left  { justify-content: flex-start; }
-  .evo__pill {
-    position: absolute;
-    left: 50%;
-    top: calc(100% + 1.25rem);
-    transform: translate(-50%, 0);
-    width: min(23rem, 34%);
-    margin: 0;
-    text-align: center;
-  }
-  .evo__month { margin: 3rem 0 2rem; }
-}
-
-@media (max-width: 61.99rem) {
-  .evo__road { padding-left: 1.25rem; }
-  .evo__road::before {
-    content: "";
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    border-left: 2px solid var(--evo-rule);
-  }
-  .evo__line { display: none; }
-  .evo__plan { max-width: none; }
-}
-
-/* ------------------------------------------------------------- RECORD -- */
-/* The full record opens on drafting stock: it is long-form reading, and the
-   blueprint ground is for the map, not for paragraphs.                     */
+/* -------------------------------------------------------------- RECORD -- */
 
 .evo__sheet {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  display: grid;
-  place-items: center;
-  padding: clamp(.75rem, 3vw, 2.5rem);
-  background: rgba(8, 22, 16, .72);
+  position: fixed; inset: 0; z-index: 9000;
+  display: grid; place-items: center;
+  padding: clamp(.5rem, 3vw, 2.5rem);
+  background: rgb(12 25 18 / .55);
 }
 .evo__sheet[hidden] { display: none; }
 .evo__sheetcard {
   position: relative;
-  width: min(62rem, 100%);
-  max-height: min(86vh, 54rem);
+  width: min(64rem, 100%);
+  max-height: min(88vh, 56rem);
   overflow-y: auto;
   background: var(--white);
-  color: var(--black);
   border-radius: var(--evo-r);
   padding: clamp(1.25rem, 3vw, 2rem);
   font-size: var(--text-sm);
@@ -438,102 +257,76 @@ html.evo-dark .ihp .toc > summary { color: #cfe0d6; }
   position: absolute; top: .75rem; right: .75rem;
   width: 2rem; height: 2rem;
   display: grid; place-items: center;
-  border: 1px solid var(--gray-300);
-  background: var(--white);
-  color: var(--gray-600);
-  border-radius: 2px;
-  font: inherit; font-size: 1rem; line-height: 1;
-  cursor: pointer;
+  border: 1px solid var(--evo-line); background: var(--white); color: var(--gray-600);
+  border-radius: 2px; font: inherit; font-size: 1rem; line-height: 1; cursor: pointer;
 }
-.evo__close:hover { background: var(--leaf-900); border-color: var(--leaf-900); color: #ffffff; }
+.evo__close:hover { background: var(--leaf-900); border-color: var(--leaf-900); color: var(--white); }
 
-.evo__sheetcard h3 { margin: .2rem 0 .1rem; color: var(--leaf-900); font-size: 1.35rem; }
-.evo__sheetcard h4 {
-  margin: 1.4rem 0 .5rem;
-  font-size: .6875rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--gray-500);
+.evo__sheethead { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: var(--sp-4); align-items: center; padding-right: 2.5rem; }
+.evo__sheethead .evo__face { width: 4.5rem; height: 4.5rem; }
+.sec--evo .evo__sheetcard h3 { font-size: 1.35rem; font-weight: 700; color: var(--leaf-900); line-height: 1.2; }
+.sec--evo .evo__sheetcard h4 {
+  margin: var(--sp-5) 0 var(--sp-2);
+  font-size: .6875rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-500);
 }
 .evo__sheetcard p { margin: 0 0 .7rem; line-height: 1.6; max-width: 76ch; }
 .evo__sheetcard ul { margin: 0 0 .7rem; padding-left: 1.1rem; line-height: 1.55; max-width: 76ch; }
 .evo__sheetcard li + li { margin-top: .3rem; }
-.evo__sheetmeta { color: var(--gray-500); font-size: var(--text-xs); margin-bottom: .9rem; }
-.evo__sheetmeta b { color: var(--leaf-700); font-weight: 650; font-variant-numeric: tabular-nums; }
+.evo__meta { color: var(--gray-500); font-size: var(--text-xs); line-height: 1.5; }
+.evo__meta b { color: var(--leaf-700); font-weight: 700; font-variant-numeric: tabular-nums; }
 
-.evo__ba { display: grid; gap: 1px; background: var(--gray-300); border: 1px solid var(--gray-300); border-radius: 2px; }
-@media (min-width: 48rem) { .evo__ba { grid-template-columns: 1fr 1fr; } }
-.evo__ba > div { background: var(--white); padding: .85rem 1rem 1rem; }
-.evo__ba h5 {
-  margin: 0 0 .4rem;
-  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-}
-.evo__ba .from h5 { color: var(--gray-500); }
-.evo__ba .to h5 { color: var(--leaf-700); }
-.evo__ba ul { margin: 0; padding-left: 1rem; font-size: .875rem; }
-
-.evo__visits { display: grid; gap: 1px; background: var(--gray-300); border: 1px solid var(--gray-300); border-radius: 2px; margin-bottom: .9rem; }
-@media (min-width: 48rem) { .evo__visits { grid-template-columns: repeat(var(--n, 2), 1fr); } }
-.evo__visits > div { background: var(--white); padding: .85rem 1rem 1rem; }
+.evo__visits { display: grid; gap: 1px; background: var(--evo-line); border: 1px solid var(--evo-line); border-radius: 2px; margin-bottom: var(--sp-4); }
+@media (min-width: 48rem) { .evo__visits { grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); } }
+.evo__visits > div { background: var(--white); padding: .8rem 1rem 1rem; }
 .evo__visits .is-here { background: var(--leaf-50); }
-.evo__visits h5 { margin: 0 0 .35rem; font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--leaf-700); }
-.evo__visits p { font-size: .875rem; margin: 0; }
+.sec--evo .evo__visits h5 { font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--leaf-700); margin-bottom: .35rem; }
+.evo__visits p { font-size: .8125rem; margin: 0; }
 .evo__visits button {
   margin-top: .5rem; appearance: none; border: 0; background: none; padding: 0;
   font: inherit; font-size: .8125rem; font-weight: 600; color: var(--leaf-700);
   text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
 }
 .evo__deep {
-  margin: 0 0 .9rem;
-  padding: .75rem 1rem;
-  background: var(--leaf-50);
-  border-left: 2px solid var(--leaf-700);
-  line-height: 1.6;
+  margin: 0 0 var(--sp-4); padding: .8rem 1rem;
+  background: var(--leaf-50); border-left: 2px solid var(--leaf-700); line-height: 1.6;
 }
-.evo__shot { margin: 1rem 0 0; }
-.evo__shot img {
-  display: block; width: 100%; max-height: 22rem; object-fit: cover;
-  border: 1px solid var(--gray-300); border-radius: 2px;
+.evo__ba { display: grid; gap: 1px; background: var(--evo-line); border: 1px solid var(--evo-line); border-radius: 2px; }
+@media (min-width: 48rem) { .evo__ba { grid-template-columns: 1fr 1fr; } }
+.evo__ba > div { background: var(--white); padding: .8rem 1rem 1rem; }
+.sec--evo .evo__ba h5 { font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .4rem; }
+.evo__ba .from h5 { color: var(--gray-500); }
+.evo__ba .to h5 { color: var(--leaf-700); }
+.evo__ba ul { margin: 0; padding-left: 1rem; font-size: .8125rem; }
+
+/* the evidence gallery: what changed, as photographs */
+.evo__ev { display: grid; gap: var(--sp-4); }
+@media (min-width: 40rem) { .evo__ev { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.evo__ev figure { margin: 0; }
+.evo__ev img {
+  display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border: 1px solid var(--evo-line); border-radius: 2px; background: var(--gray-100);
+  cursor: zoom-in;
 }
-.evo__shot figcaption { margin-top: .4rem; font-size: var(--text-xs); color: var(--gray-500); }
-.evo__links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.evo__ev figcaption {
+  margin-top: .4rem; padding-left: .6rem;
+  border-left: 1px solid var(--gray-400);
+  font-size: var(--text-xs); line-height: 1.5; color: var(--gray-600);
+}
+.evo__links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: var(--sp-4); }
 .evo__links a {
   font-size: .75rem; font-weight: 600;
-  border: 1px solid var(--gray-300); border-radius: 2px;
+  border: 1px solid var(--evo-line); border-radius: 2px;
   padding: .35rem .7rem; text-decoration: none; color: var(--leaf-700);
 }
 .evo__links a:hover { border-color: var(--leaf-700); background: var(--leaf-50); }
-.evo__src { margin-top: 1rem; font-size: var(--text-xs); color: var(--gray-500); }
-
-/* ---------------------------------------------------------------- KEY -- */
-
-.evo__key {
-  display: grid;
-  gap: 1.25rem 2rem;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--evo-rule);
-  color: var(--evo-ink-2);
-  font-size: .8125rem;
-  line-height: 1.55;
-}
-@media (min-width: 48rem) { .evo__key { grid-template-columns: repeat(3, 1fr); } }
-.evo__key h4 {
-  margin: 0 0 .4rem;
-  font-size: .625rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  color: #7f9d8c;
-}
-.evo__key p { margin: 0 0 .4rem; }
-.evo__key b { color: #ffffff; font-weight: 650; }
+.evo__src { margin-top: var(--sp-4); font-size: var(--text-xs); color: var(--gray-500); }
 
 /* ---------------------------------------------------------------- PRINT -- */
 
 @media print {
-  .sec--evo { background: #ffffff; color: var(--black); margin: 0; width: auto; }
-  .sec--evo::before, .sec--evo::after { display: none; }
-  .evo { color: var(--black); }
-  .evo__card, .evo__plan { background: #ffffff; border-color: #999; color: var(--black); }
-  .evo__who, .evo__plan h3, .sec--evo > h2 { color: var(--black); }
-  .evo__controls, .evo__line, .evo__more { display: none; }
-  .evo__row { display: block; margin-bottom: 1.5rem; }
-  .evo__row > .evo__card { width: auto; }
-  .evo__pill { position: static; width: auto; transform: none; margin: .5rem 0 0; }
+  .sec--evo { margin: 0; width: auto; border: 0; }
+  .evo__controls, .evo__open { display: none; }
+  .evo__grid { display: block; }
+  .evo__card { break-inside: avoid; margin-bottom: var(--sp-4); }
+  html.evo-open .ihp .toc { opacity: 1; visibility: visible; }
 }

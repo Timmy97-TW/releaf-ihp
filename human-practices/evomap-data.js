@@ -193,6 +193,11 @@ window.EVOMAP = (function () {
   var engagements = [
     {
       id: "e01", date: "2026-03-19",
+      face: "face-lin",
+      evidence: [
+        { src: "ev-first-agar", cap: "12 April. Our first Arabidopsis on agar, three weeks after she asked whether Medicago was the right plant." },
+        { src: "ev-hollow-fibre", cap: "25 April. The membrane sketch that replaced the kill switch she had questioned." }
+      ],
       name: "Dr. Lin", zh: "林維怡", kind: "expert",
       role: "Plant and stress biology",
       lanes: ["plant", "circuit", "reactor"],
@@ -210,6 +215,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e02", date: "2026-03-27",
+      face: "face-cheng",
+      evidence: [
+        { src: "ev-cheng-plates", cap: "27 March, her bench at NTU. Arabidopsis on agar, the system we moved to." },
+        { src: "ev-cheng-seeds", cap: "The seed she gave us, on its way back to our lab." },
+        { src: "ev-cheng-boxes", cap: "Her hydroponic boxes. We copied the design in June." }
+      ],
       name: "Prof. Cheng", zh: "鄭梅君", kind: "expert",
       role: "Plant and stress biology, NTU", where: "Her laboratory at NTU",
       lanes: ["plant"],
@@ -227,6 +238,10 @@ window.EVOMAP = (function () {
     },
     {
       id: "e03", date: "2026-04-03", dateNote: "The interview log dates this 3 April; the plant page dates the same visit to Academia Sinica 4 April. Both are ours and they disagree.",
+      evidence: [
+        { src: "ev-verslues-rack", cap: "4 April, Academia Sinica. The vertical plate rack we copied." },
+        { src: "ev-float-plate", cap: "Our own float plate, built from what we saw there." }
+      ],
       name: "Dr. Paul Verslues", zh: "", kind: "expert",
       role: "Plant stress biology and protectant design", where: "Academia Sinica",
       lanes: ["plant", "protect"],
@@ -245,6 +260,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e04", date: "2026-04-10",
+      face: "face-chen",
+      evidence: [
+        { src: "ev-pivot-doc", cap: "15 April, five days after the meeting. The pivot document: bacteria inside a vessel, light switching them on." },
+        { src: "ev-hollow-fibre", cap: "The hollow fibre design that followed from it." }
+      ],
       name: "Prof. Chen", zh: "陳文亮", kind: "expert",
       role: "AIoT and smart agriculture, founder of Agritalk", where: "Online",
       lanes: ["circuit", "reactor", "model", "deploy"],
@@ -264,6 +284,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e05", date: "2026-04-18",
+      face: "face-brophy",
+      evidence: [
+        { src: "ev-hollow-fibre", cap: "25 April. Containment moved into hardware: cells on one side of the membrane, protectant across it." },
+        { src: "ev-reactor-run", cap: "20 July. The reactor running with that membrane fitted." }
+      ],
       name: "Dr. Jennifer Brophy", zh: "", kind: "expert",
       role: "Gene circuit design, protectant design, bioreactor hardware",
       lanes: ["protect", "circuit", "reactor"],
@@ -282,6 +307,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e06", date: "2026-05-16",
+      face: "farm-expo-2",
+      evidence: [
+        { src: "ev-expo-interview", cap: "16 May. Asking stallholders what actually goes wrong before telling them what we build." },
+        { src: "ev-market-may", cap: "Weather, water and price came before salt." },
+        { src: "ev-line-prototype", cap: "11 July. The first LINE screen built for the farmers we met that day." }
+      ],
       name: "Farmer Expo, Taipei", zh: "花博農民市集", kind: "farm",
       role: "Smallholder and organic farmers", where: "Taipei",
       lanes: ["deploy"],
@@ -301,6 +332,10 @@ window.EVOMAP = (function () {
     },
     {
       id: "e07", date: "2026-05-22",
+      face: "face-worldveg",
+      evidence: [
+        { src: "ev-worldveg-meet", cap: "22 May. The World Vegetable Center on climate resilience for smallholders." }
+      ],
       name: "World Vegetable Center", zh: "", kind: "company",
       role: "Smallholder farming and climate resilience",
       lanes: ["deploy"],
@@ -318,6 +353,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e08", date: "2026-06-17", recurring: true,
+      face: "face-kyle",
+      evidence: [
+        { src: "ev-kyle-bench", cap: "Dr. Kyle at our bench, where the three readouts and the plate rules were set." },
+        { src: "ev-hydro-dead", cap: "23 July. The contaminated hydroponic run his rules told us to exclude whole." }
+      ],
       dateNote: "A standing thread, not a single meeting. The plant page records advice weekly from June; 17 June is the dated entry, and the July ruling on the salt ceiling is in the same thread.",
       name: "Dr. Kyle", zh: "", kind: "expert",
       role: "Plant screening advisor, weekly from June",
@@ -337,6 +377,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e09", date: "2026-06-18",
+      face: "face-chang",
+      evidence: [
+        { src: "ev-chang-visit", cap: "18 June. Prof. Chang at our slide, on flow, foaming and transmembrane pressure." },
+        { src: "ev-pressure-live", cap: "12 July. Pressure on a screen for the first time, three weeks after he asked for it." },
+        { src: "ev-pinch-valve", cap: "7 August. The pinch valve, printed and tested." }
+      ],
       name: "Prof. Chang", zh: "張嘉修", kind: "expert",
       role: "Biomanufacturing and bioreactor engineering, chair professor of chemical engineering",
       where: "He visited the team",
@@ -356,6 +402,13 @@ window.EVOMAP = (function () {
     },
     {
       id: "e10", date: "2026-06-20",
+      face: "face-chen",
+      evidence: [
+        { src: "ev-chen-reactor", cap: "20 June. The reactor, gone through in front of the team." },
+        { src: "ev-chen-model", cap: "The modelling session: connect the model to the bench, and refine it with measured data." },
+        { src: "ev-chen-autofill", cap: "He took apart the auto-filling reservoir we had proposed. We never built it." },
+        { src: "ev-math-sketch", cap: "15 August. The model as it ended up, built to take wet-lab data back in." }
+      ],
       name: "Prof. Chen", zh: "陳文亮", kind: "expert",
       role: "AIoT and smart agriculture, founder of Agritalk", where: "He visited the team",
       lanes: ["plant", "reactor", "model", "deploy"],
@@ -375,6 +428,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e11", date: "2026-06-27",
+      face: "face-sattely",
+      evidence: [
+        { src: "ev-chbio-bottle", cap: "The purified protectant she told us to test on plants first." },
+        { src: "ev-soil-pots", cap: "22 August. Those tests, in soil." }
+      ],
       name: "Dr. Elizabeth Sattely", zh: "", kind: "expert",
       role: "Protectant design, Stanford",
       lanes: ["protect"],
@@ -394,6 +452,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e12", date: "2026-07-07",
+      face: "logo-greenmedia",
+      evidence: [
+        { src: "ev-forum-prep", cap: "29 August. Forum preparation, a week out." },
+        { src: "forum-dsc-75", cap: "5 September. The discussion format they advised us to build." }
+      ],
       name: "Green Media", zh: "", kind: "company",
       role: "Agricultural media",
       lanes: ["deploy"],
@@ -411,6 +474,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e13", date: "2026-07-09",
+      face: "ev-chbio-wall",
+      evidence: [
+        { src: "ev-chbio-wall", cap: "9 July. Their research wall, and the bench of finished bottles." },
+        { src: "ev-chbio-bottle", cap: "富肽2號 on the way back to our lab. It became experiment set 7." },
+        { src: "ev-chbio-rules", cap: "Their regulatory specialist on what it takes to register a biostimulant in Taiwan." }
+      ],
       name: "CH Biotech", zh: "正瀚生技", kind: "company",
       role: "Biostimulant development and regulation", where: "Their site, with Prof. Chen present",
       lanes: ["plant", "protect", "deploy"],
@@ -430,6 +499,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e14", date: "2026-07-18",
+      face: "ev-bioasia-booth",
+      evidence: [
+        { src: "ev-bioasia-booth", cap: "18 July. A hollow fibre setup at the exhibition, and the oxygen question we came home with." },
+        { src: "ev-do-sensors", cap: "5 August. Dissolved oxygen and pH sensors on the bench." },
+        { src: "ev-hay-infusion", cap: "3 August. Hay infusion, the agricultural waste idea from the same day." }
+      ],
       name: "BIO Asia-Taiwan Exhibition", zh: "", kind: "event",
       role: "Companies, experts and researchers across biotechnology",
       lanes: ["protect", "reactor", "deploy"],
@@ -447,6 +522,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e15", date: "2026-07-21",
+      face: "face-mschen",
+      evidence: [
+        { src: "ev-mschen-soil", cap: "21 July. Ms. Chen at ground level, where she does most of her explaining." },
+        { src: "ev-seed-platform", cap: "23 July, two days later. The seed exchange prototype she asked for." },
+        { src: "farm-tamsui-cook", cap: "Lunch from what we picked, and the conversation about seed." }
+      ],
       name: "Ms. Chen", zh: "陳惠雯", kind: "farm",
       role: "Natural farming, Happy Farm", where: "Tamsui",
       lanes: ["deploy"],
@@ -466,6 +547,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e16", date: "2026-07-28",
+      face: "face-huang",
+      evidence: [
+        { src: "ev-electroporation", cap: "Electroporation, the step his cloning advice was about." },
+        { src: "ev-wb800-plate", cap: "The WB800 plate he gave us." }
+      ],
       name: "Prof. Huang", zh: "黃介辰", kind: "expert",
       role: "Plant stress biology and gene circuits, NCHU", where: "Online",
       lanes: ["plant", "circuit", "model"],
@@ -485,6 +571,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e17", date: "2026-08-06",
+      face: "face-huang",
+      evidence: [
+        { src: "ev-nchu-visit", cap: "6 August, NCHU. The second meeting, in his own department." },
+        { src: "ev-wb800-plate", cap: "The B. subtilis WB800 plate we came home with." }
+      ],
       name: "Prof. Huang", zh: "黃介辰", kind: "expert",
       role: "Plant stress biology and gene circuits, NCHU", where: "In person at NCHU",
       lanes: ["plant", "protect", "circuit"],
@@ -502,6 +593,10 @@ window.EVOMAP = (function () {
     },
     {
       id: "e18", date: "2026-08-06",
+      face: "ev-huangzb-group",
+      evidence: [
+        { src: "ev-huangzb-group", cap: "6 August. Prof. Huang 黃姿碧 on delivery, dose and timing." }
+      ],
       name: "Prof. Huang", zh: "黃姿碧", kind: "expert",
       role: "Plant and stress biology, protectant delivery, NCHU", where: "In person at NCHU",
       lanes: ["plant", "protect", "circuit"],
@@ -519,6 +614,13 @@ window.EVOMAP = (function () {
     },
     {
       id: "e19", date: "2026-08-11",
+      face: "face-yeshealth",
+      evidence: [
+        { src: "ev-yuanxian-wall", cap: "11 August. A wall of hydroponic channels, and our 250 mL box multiplied by a thousand." },
+        { src: "ev-yuanxian-plate", cap: "Pointing at the underside of their float plate." },
+        { src: "ev-yuanxian-cad", cap: "The same afternoon, back on the CAD drawings." },
+        { src: "ev-cad-redesign", cap: "The redesign that came out of it." }
+      ],
       name: "Yes Health iFarm", zh: "", kind: "farm",
       role: "Controlled-environment hydroponic farm",
       lanes: ["plant", "reactor", "model", "deploy"],
@@ -536,6 +638,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e20", date: "2026-08-28",
+      face: "face-cheng",
+      evidence: [
+        { src: "ev-soil-pots", cap: "22 August. The soil run she reviewed." },
+        { src: "ev-hydro-dead", cap: "What she was shown: the sets that had not worked, as well as the ones that had." }
+      ],
       name: "Prof. Cheng", zh: "鄭梅君", kind: "expert",
       role: "Plant and stress biology, NTU",
       lanes: ["plant"],
@@ -555,6 +662,11 @@ window.EVOMAP = (function () {
     },
     {
       id: "e21", date: "2026-09-04",
+      face: "face-chang",
+      evidence: [
+        { src: "ev-reactor-case", cap: "23 August. The reactor he saw on his second visit, built into a case." },
+        { src: "ev-od600-live", cap: "Live density from the loop, the data we could not interpret without him." }
+      ],
       name: "Prof. Chang", zh: "張嘉修", kind: "expert",
       role: "Biomanufacturing and bioreactor engineering", where: "Second visit to the team",
       lanes: ["reactor", "model", "deploy"],
@@ -572,6 +684,12 @@ window.EVOMAP = (function () {
     },
     {
       id: "e22", date: "2026-09-05",
+      face: "forum-dsc-57",
+      evidence: [
+        { src: "forum-dsc08502", cap: "5 September. A grower with the microphone at our forum." },
+        { src: "forum-dsc08227", cap: "Our reactor, explained to the room." },
+        { src: "forum-dsc09107", cap: "The organic certification question, continuing after the session." }
+      ],
       dateNote: "The interview log's table dates the forum 4 September; the written narrative of the event dates it 5 September, and so does the booth write-up for the same day. We use 5 September.",
       name: "Public Forum and market day", zh: "", kind: "forum",
       role: "Experts, farmers and the public, more than 50 participants",
@@ -597,6 +715,10 @@ window.EVOMAP = (function () {
     },
     {
       id: "e23", date: "2026-09-09",
+      face: "booth-intro",
+      evidence: [
+        { src: "booth-intro", cap: "Young farmers were the audience that recognised the device first." }
+      ],
       name: "Taiwan SMART Agriweek", zh: "", kind: "event",
       role: "Agricultural technology exhibition",
       lanes: ["deploy"],
@@ -627,6 +749,10 @@ window.EVOMAP = (function () {
     },
     {
       id: "e25", date: "2026-09-12",
+      face: "face-endy",
+      evidence: [
+        { src: "exp-0912-sattely-endy", cap: "12 September. The second Stanford review, on controls and on showing ACC deaminase is secreted." }
+      ],
       name: "Dr. Sattely and Prof. Endy", zh: "", kind: "expert",
       role: "Protectant design and synthetic biology, Stanford",
       lanes: ["protect", "circuit"],
