@@ -1,0 +1,600 @@
+/* =============================================================================
+   ReLeaf: Project Evolution Map — styles
+   -----------------------------------------------------------------------------
+   Everything is scoped under .evomap. No global element is restyled, and no
+   token in tokens.css is redefined; the drawing-set colours from DESIGN.md are
+   declared here under an --em-* prefix so this component carries its own copy
+   and can drop onto any sheet.
+
+   The component is two grounds, as the design set requires: the plate is
+   blueprint, everything around it is drafting stock inherited from the page.
+   Square corners, hairlines instead of shadows, Inter only, state named in
+   words before it is drawn or coloured.
+   ========================================================================== */
+
+.evomap {
+  /* grounds */
+  --em-blue-900: #0c231a;
+  --em-blue-800: #10301f;
+  --em-blue-700: #16412c;
+  --em-paper-2:  #eceee7;
+  --em-vellum:   #fbfbf8;
+
+  /* ink on stock */
+  --em-ink:        #15201a;
+  --em-ink-2:      #3d4a43;
+  --em-graphite:   #5c6b62;
+  --em-graphite-2: #93a099;
+
+  /* leaf */
+  --em-leaf-900: #14402b;
+  --em-leaf-700: #23684a;
+  --em-leaf-500: #4f9c6f;
+  --em-leaf-200: #cfe4d8;
+
+  /* on blueprint */
+  --em-plate-ink:       #dfe9e2;
+  --em-plate-ink-muted: #8fae9d;
+  --em-plate-rule:      rgba(180, 215, 195, .34);
+  --em-plate-node:      #7fc9a2;
+
+  /* the one crossing colour, per the design set: amber means cross-thread */
+  --em-amber:      #d6b078;
+  --em-amber-dark: #8f6210;
+  --em-open:       #a33d21;
+  --em-open-plate: #d8734c;
+
+  --em-rule-heavy: 1.5px;
+  --em-rule: 1px;
+  --em-fld: 600 .6875rem/1.2 var(--font-display, Inter, sans-serif);
+  --em-lsp: .13em;
+
+  color: var(--em-ink);
+  font-family: var(--font-body, Inter, sans-serif);
+}
+
+.evomap *,
+.evomap *::before,
+.evomap *::after { box-sizing: border-box; }
+
+.evomap [hidden] { display: none !important; }
+
+.evomap .em-fld {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--em-graphite);
+}
+
+/* ================================================================ TALLY === */
+/* A quantity schedule with ruled cells, not a row of hero metrics. */
+
+.evomap .em-tally {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 var(--sp-5, 1.5rem);
+  border-top: var(--em-rule-heavy) solid var(--em-ink);
+  border-bottom: var(--em-rule) solid var(--em-graphite-2);
+}
+@media (min-width: 48rem) {
+  .evomap .em-tally { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.evomap .em-tally > div {
+  padding: .7rem .9rem .8rem;
+  border-right: var(--em-rule) solid var(--em-graphite-2);
+}
+.evomap .em-tally > div:last-child { border-right: 0; }
+.evomap .em-tally dt {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+  margin: 0 0 .3rem;
+}
+.evomap .em-tally dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1.1rem + .9vw, 1.875rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em;
+  color: var(--em-leaf-900);
+}
+.evomap .em-tally dd span {
+  display: block;
+  margin-top: .35rem;
+  font-size: var(--text-sm, .9375rem);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.4;
+  color: var(--em-ink-2);
+}
+
+/* ============================================================== CONTROLS == */
+
+.evomap .em-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+  margin: 0 0 var(--sp-4, 1rem);
+}
+.evomap .em-controls__label {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+  margin-right: .3rem;
+}
+.evomap .em-controls__sep {
+  flex: 0 0 var(--em-rule);
+  align-self: stretch;
+  min-height: 1.75rem;
+  background: var(--em-graphite-2);
+  margin: 0 .35rem;
+}
+.evomap .em-chip {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  padding: .45em .85em;
+  border: var(--em-rule) solid var(--em-graphite-2);
+  border-radius: 0;
+  background: none;
+  color: var(--em-ink-2);
+  cursor: pointer;
+  transition: background .14s ease, border-color .14s ease, color .14s ease;
+}
+.evomap .em-chip:hover { border-color: var(--em-leaf-700); color: var(--em-leaf-900); }
+.evomap .em-chip[aria-pressed="true"] {
+  background: var(--em-leaf-900);
+  border-color: var(--em-leaf-900);
+  color: #fff;
+}
+.evomap .em-chip--cross[aria-pressed="true"] {
+  background: var(--em-amber-dark);
+  border-color: var(--em-amber-dark);
+}
+
+/* =============================================================== PLATE ==== */
+
+.evomap .em-plate {
+  background: var(--em-blue-900);
+  color: var(--em-plate-ink);
+  padding: var(--sp-5, 1.5rem) 0 var(--sp-4, 1rem);
+}
+.evomap .em-plate__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .5rem 1rem;
+  padding: 0 var(--sp-5, 1.5rem) var(--sp-4, 1rem);
+  margin: 0 var(--sp-5, 1.5rem) var(--sp-4, 1rem) var(--sp-5, 1.5rem);
+  border-bottom: var(--em-rule) solid var(--em-plate-rule);
+}
+.evomap .em-plate__head h3 {
+  margin: 0;
+  font-family: var(--font-display, Inter, sans-serif);
+  font-variation-settings: "opsz" 32;
+  font-size: clamp(1.0625rem, 1rem + .35vw, 1.3125rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: #fff;
+}
+.evomap .em-plate__head p {
+  margin: 0;
+  font-size: var(--text-sm, .9375rem);
+  line-height: 1.5;
+  color: var(--em-plate-ink-muted);
+  max-width: 62ch;
+}
+.evomap .em-plate__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 var(--sp-5, 1.5rem);
+  -webkit-overflow-scrolling: touch;
+}
+.evomap .em-svg {
+  display: block;
+  width: 100%;
+  min-width: 1180px;
+  height: auto;
+}
+.evomap .em-svg text { font-family: var(--font-display, Inter, sans-serif); }
+.evomap .em-hint {
+  margin: var(--sp-3, .75rem) var(--sp-5, 1.5rem) 0;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-plate-ink-muted);
+}
+@media (min-width: 78rem) { .evomap .em-hint--scroll { display: none; } }
+
+/* ------------------------------------------------------- SVG PRIMITIVES -- */
+
+.evomap .em-axis-rule { stroke: var(--em-plate-rule); stroke-width: 1; }
+.evomap .em-axis-tick { stroke: var(--em-plate-ink-muted); stroke-width: 1; }
+.evomap .em-axis-label {
+  fill: var(--em-plate-ink-muted);
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+}
+.evomap .em-lane-rule { stroke: var(--em-plate-rule); stroke-width: 1; }
+.evomap .em-lane-base { stroke: var(--em-plate-rule); stroke-width: 1; }
+.evomap .em-lane-name {
+  fill: var(--em-plate-ink-muted);
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+}
+.evomap .em-state-line {
+  stroke: var(--em-leaf-500);
+  stroke-width: 2;
+  fill: none;
+}
+.evomap .em-state-line--first { stroke: var(--em-plate-ink-muted); stroke-dasharray: 5 4; }
+.evomap .em-state-notch { stroke: var(--em-leaf-500); stroke-width: 1; }
+.evomap .em-state-label {
+  fill: var(--em-plate-ink-muted);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+.evomap .em-state-label--last { fill: var(--em-plate-ink); font-weight: 600; }
+
+.evomap .em-stitch { stroke: var(--em-plate-ink-muted); stroke-width: 1; }
+.evomap .em-mark { fill: var(--em-plate-ink); stroke: none; }
+.evomap .em-head { fill: none; stroke: var(--em-plate-ink-muted); stroke-width: 1; }
+.evomap .em-head-no {
+  fill: var(--em-plate-ink-muted);
+  font: var(--em-fld);
+  font-size: 9px;
+  letter-spacing: .06em;
+}
+.evomap .em-build-mark { fill: none; stroke: var(--em-plate-ink-muted); stroke-width: 1; }
+.evomap .em-build-mark--approx { stroke-dasharray: 3 2.5; }
+.evomap .em-build-label { fill: var(--em-plate-ink-muted); font-size: 10px; }
+
+.evomap .em-loop-arc { fill: none; stroke: var(--em-leaf-500); stroke-width: 1.2; }
+.evomap .em-loop-label {
+  fill: var(--em-plate-node);
+  font: var(--em-fld);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.evomap .em-loop-count {
+  fill: #fff;
+  font: var(--em-fld);
+  font-size: 9.5px;
+  letter-spacing: .04em;
+}
+.evomap .em-loop-chip { fill: var(--em-leaf-700); stroke: var(--em-leaf-500); stroke-width: 1; }
+
+.evomap .em-chain-arc {
+  fill: none;
+  stroke: var(--em-amber);
+  stroke-width: 1.1;
+  stroke-dasharray: 6 4;
+}
+.evomap .em-chain-head { fill: var(--em-amber); }
+.evomap .em-chain-label { fill: var(--em-amber); font-size: 10px; }
+
+/* node hit target and its states */
+.evomap .em-node { cursor: pointer; }
+.evomap .em-node__hit { fill: transparent; }
+.evomap .em-node__flag { display: none; }
+.evomap .em-node__flag rect { fill: var(--em-blue-700); stroke: var(--em-leaf-500); stroke-width: 1; }
+.evomap .em-node__flag text { fill: #fff; font-size: 11px; font-weight: 600; }
+.evomap .em-node:hover .em-node__flag,
+.evomap .em-node:focus-visible .em-node__flag,
+.evomap .em-node.is-sel .em-node__flag { display: block; }
+.evomap .em-node:hover .em-mark,
+.evomap .em-node:focus-visible .em-mark { fill: var(--em-plate-node); }
+.evomap .em-node:hover .em-stitch,
+.evomap .em-node:focus-visible .em-stitch { stroke: var(--em-plate-node); }
+.evomap .em-node:focus-visible { outline: none; }
+.evomap .em-node:focus-visible .em-node__ring { stroke: var(--em-leaf-500); stroke-width: 2; }
+.evomap .em-node__ring { fill: none; stroke: none; }
+.evomap .em-node.is-sel .em-mark { fill: #fff; }
+.evomap .em-node.is-sel .em-stitch { stroke: #fff; }
+.evomap .em-node.is-sel .em-node__ring { stroke: var(--em-leaf-500); stroke-width: 1.5; }
+.evomap .em-node--pending .em-mark { fill: none; stroke: var(--em-open-plate); stroke-width: 1.5; }
+.evomap .em-node--pending .em-head { stroke: var(--em-open-plate); }
+
+/* dimming: one class, applied by script */
+.evomap .is-dim { opacity: .18; }
+.evomap .em-svg g, .evomap .em-svg path, .evomap .em-svg rect, .evomap .em-svg text {
+  transition: opacity .16s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .evomap .em-svg g, .evomap .em-svg path, .evomap .em-svg rect, .evomap .em-svg text,
+  .evomap .em-chip { transition: none; }
+}
+
+/* ================================================================= KEY ==== */
+
+.evomap .em-key {
+  display: grid;
+  gap: var(--sp-4, 1rem) var(--sp-6, 2rem);
+  margin: var(--sp-5, 1.5rem) 0 0;
+  padding: var(--sp-4, 1rem) 0 0;
+  border-top: var(--em-rule) solid var(--em-graphite-2);
+  font-size: var(--text-sm, .9375rem);
+  line-height: 1.55;
+}
+@media (min-width: 48rem) { .evomap .em-key { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 62rem) { .evomap .em-key { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.evomap .em-key h4 {
+  margin: 0 0 .5rem;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+}
+.evomap .em-key ul { margin: 0; padding: 0; list-style: none; }
+.evomap .em-key li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: .6rem;
+  align-items: center;
+  padding: .3rem 0;
+  color: var(--em-ink-2);
+}
+.evomap .em-key svg { display: block; overflow: visible; }
+
+/* =============================================================== PANEL ==== */
+
+.evomap .em-panel {
+  margin: var(--sp-5, 1.5rem) 0 0;
+  border: var(--em-rule) solid var(--em-graphite-2);
+  border-top: var(--em-rule-heavy) solid var(--em-leaf-700);
+  background: var(--em-vellum);
+  padding: var(--sp-4, 1rem) var(--sp-5, 1.5rem) var(--sp-5, 1.5rem);
+}
+.evomap .em-panel__hint {
+  margin: 0;
+  font-size: var(--text-sm, .9375rem);
+  color: var(--em-ink-2);
+  max-width: 68ch;
+}
+.evomap .em-panel__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  padding-bottom: var(--sp-3, .75rem);
+  border-bottom: var(--em-rule) solid var(--em-graphite-2);
+}
+.evomap .em-panel__date {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-leaf-700);
+}
+.evomap .em-panel h4 {
+  margin: .6rem 0 .15rem;
+  font-family: var(--font-display, Inter, sans-serif);
+  font-variation-settings: "opsz" 32;
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.4375rem);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  color: var(--em-leaf-900);
+}
+.evomap .em-panel h4 i { font-style: normal; color: var(--em-graphite); font-weight: 600; }
+.evomap .em-panel__role {
+  margin: 0 0 var(--sp-3, .75rem);
+  font-size: var(--text-sm, .9375rem);
+  color: var(--em-ink-2);
+}
+.evomap .em-panel__close {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  padding: .4em .7em;
+  border: var(--em-rule) solid var(--em-graphite-2);
+  background: none;
+  color: var(--em-ink-2);
+  cursor: pointer;
+}
+.evomap .em-panel__close:hover { border-color: var(--em-leaf-700); color: var(--em-leaf-900); }
+
+.evomap .em-areas { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 var(--sp-4, 1rem); padding: 0; list-style: none; }
+.evomap .em-areas li {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  padding: .3em .6em;
+  border: var(--em-rule) solid var(--em-leaf-500);
+  color: var(--em-leaf-900);
+}
+
+.evomap .em-stamp {
+  display: inline-block;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  padding: .25em .55em;
+  border: var(--em-rule) solid currentColor;
+  color: var(--em-leaf-700);
+}
+.evomap .em-stamp::before {
+  content: "";
+  display: inline-block;
+  width: .5em; height: .5em;
+  margin-right: .45em;
+  background: currentColor;
+  vertical-align: baseline;
+}
+.evomap .em-stamp--open { color: var(--em-open); }
+.evomap .em-stamp--loop { color: var(--em-leaf-700); }
+
+.evomap .em-body { display: grid; gap: var(--sp-5, 1.5rem); }
+@media (min-width: 56rem) {
+  .evomap .em-body { grid-template-columns: minmax(0, 1fr) 17rem; align-items: start; }
+}
+.evomap .em-body p, .evomap .em-body li { max-width: 68ch; }
+.evomap .em-body h5 {
+  margin: var(--sp-4, 1rem) 0 .45rem;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+}
+.evomap .em-body h5:first-child { margin-top: 0; }
+.evomap .em-summary { margin: 0; font-size: var(--text-base, 1.0625rem); line-height: 1.6; }
+
+.evomap .em-quote {
+  margin: var(--sp-4, 1rem) 0;
+  padding: .1rem 0 .1rem var(--sp-4, 1rem);
+  border-left: var(--em-rule) solid var(--em-graphite);
+  font-size: var(--text-base, 1.0625rem);
+  line-height: 1.55;
+  color: var(--em-leaf-900);
+}
+.evomap .em-quote--said { background: var(--em-paper-2); border-left-color: var(--em-leaf-700); padding: .75rem 1rem; }
+
+.evomap .em-list { margin: 0; padding-left: 1.15rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; }
+.evomap .em-list li { margin-bottom: .35rem; }
+
+.evomap .em-ba { display: grid; gap: 1px; background: var(--em-graphite-2); border: var(--em-rule) solid var(--em-graphite-2); }
+@media (min-width: 40rem) { .evomap .em-ba { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.evomap .em-ba > div { background: var(--em-vellum); padding: .8rem 1rem 1rem; }
+.evomap .em-ba h6 {
+  margin: 0 0 .5rem;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+}
+.evomap .em-ba--after h6 { color: var(--em-leaf-700); }
+.evomap .em-ba ul { margin: 0; padding-left: 1.05rem; font-size: var(--text-sm, .9375rem); line-height: 1.5; }
+.evomap .em-ba li { margin-bottom: .3rem; }
+.evomap .em-ba p { margin: 0; font-size: var(--text-sm, .9375rem); color: var(--em-graphite); }
+
+/* the visit comparison: three ruled columns, visit 1 / what we built / visit 2 */
+.evomap .em-cmp {
+  margin: var(--sp-5, 1.5rem) 0 0;
+  border-top: var(--em-rule-heavy) solid var(--em-ink);
+}
+.evomap .em-cmp__grid { display: grid; gap: 1px; background: var(--em-graphite-2); }
+@media (min-width: 52rem) { .evomap .em-cmp__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.evomap .em-cmp__grid > div { background: var(--em-vellum); padding: .85rem 1rem 1.1rem; }
+.evomap .em-cmp__grid > div.is-mid { background: var(--em-paper-2); }
+.evomap .em-cmp h6 {
+  margin: 0 0 .45rem;
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-graphite);
+}
+.evomap .em-cmp b { color: var(--em-leaf-900); }
+.evomap .em-cmp p { margin: 0 0 .5rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; }
+.evomap .em-cmp ul { margin: 0; padding-left: 1.05rem; font-size: var(--text-sm, .9375rem); line-height: 1.5; }
+.evomap .em-cmp__depth {
+  margin: 0;
+  padding: var(--sp-4, 1rem) 0 0;
+  font-size: var(--text-sm, .9375rem);
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--em-ink);
+}
+
+.evomap .em-side { display: grid; gap: var(--sp-4, 1rem); align-content: start; }
+.evomap figure.em-fig { margin: 0; }
+.evomap figure.em-fig img {
+  width: 100%;
+  height: auto;
+  background: var(--em-paper-2);
+  border: var(--em-rule) solid var(--em-graphite-2);
+  border-radius: 0;
+}
+.evomap figure.em-fig figcaption {
+  margin-top: .5rem;
+  padding-left: .75rem;
+  border-left: var(--em-rule) solid var(--em-graphite);
+  font-size: var(--text-xs, .8125rem);
+  line-height: 1.5;
+  color: var(--em-ink-2);
+}
+.evomap figure.em-fig .em-prov { display: block; margin-top: .25rem; font-size: .75rem; color: var(--em-graphite); }
+
+.evomap .em-links { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0; padding: 0; list-style: none; }
+.evomap .em-links a {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-leaf-700);
+  text-decoration: none;
+  border-bottom: var(--em-rule) solid var(--em-leaf-500);
+  padding-bottom: .15em;
+}
+.evomap .em-links a:hover { color: var(--em-leaf-900); border-bottom-color: var(--em-leaf-900); }
+.evomap .em-src {
+  margin: var(--sp-4, 1rem) 0 0;
+  font-size: var(--text-xs, .8125rem);
+  line-height: 1.5;
+  color: var(--em-graphite);
+  max-width: 68ch;
+}
+
+/* ============================================================ LIST VIEW === */
+
+.evomap .em-listview { margin: var(--sp-5, 1.5rem) 0 0; }
+.evomap .em-listview h3, .evomap .em-listview h4 {
+  font-family: var(--font-display, Inter, sans-serif);
+  font-variation-settings: "opsz" 32;
+  color: var(--em-leaf-900);
+}
+.evomap .em-listview h3 {
+  margin: 0 0 var(--sp-4, 1rem);
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.4375rem);
+  padding-top: var(--sp-4, 1rem);
+  border-top: var(--em-rule-heavy) solid var(--em-ink);
+}
+.evomap .em-listview ol { margin: 0 0 var(--sp-6, 2rem); padding: 0; list-style: none; }
+.evomap .em-listview > ol > li {
+  padding: var(--sp-4, 1rem) 0;
+  border-bottom: var(--em-rule) solid var(--em-graphite-2);
+}
+.evomap .em-lrow {
+  display: grid;
+  gap: .15rem var(--sp-4, 1rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 48rem) {
+  .evomap .em-lrow { grid-template-columns: 7.5rem minmax(0, 1fr); }
+}
+.evomap .em-lrow__date {
+  font: var(--em-fld);
+  letter-spacing: var(--em-lsp);
+  text-transform: uppercase;
+  color: var(--em-leaf-700);
+  padding-top: .25rem;
+}
+.evomap .em-lrow h4 { margin: 0 0 .3rem; font-size: 1.0625rem; }
+.evomap .em-lrow h4 i { font-style: normal; color: var(--em-graphite); font-weight: 600; }
+.evomap .em-lrow p { margin: 0 0 .5rem; font-size: var(--text-sm, .9375rem); line-height: 1.55; max-width: 68ch; }
+.evomap .em-lrow .em-areas { margin-bottom: .5rem; }
+.evomap .em-lmeta {
+  font-size: var(--text-xs, .8125rem);
+  color: var(--em-graphite);
+}
+.evomap .em-lthread {
+  margin: .35rem 0 .5rem;
+  padding-left: .75rem;
+  border-left: var(--em-rule) solid var(--em-leaf-500);
+  font-size: var(--text-sm, .9375rem);
+  line-height: 1.5;
+  color: var(--em-ink-2);
+}
+
+/* ============================================================== PRINT ===== */
+
+@media print {
+  .evomap .em-controls, .evomap .em-plate, .evomap .em-panel__close { display: none; }
+  .evomap .em-listview { display: block !important; }
+  .evomap .em-panel { border-color: #000; background: #fff; }
+}

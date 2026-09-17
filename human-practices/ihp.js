@@ -54,9 +54,9 @@
     if (!track || !slides.length) return;
 
     function current() {
-      var x = track.scrollLeft, best = 0, d = Infinity;
+      var left = track.getBoundingClientRect().left, best = 0, d = Infinity;
       slides.forEach(function (s, i) {
-        var dd = Math.abs(s.offsetLeft - track.offsetLeft - x);
+        var dd = Math.abs(s.getBoundingClientRect().left - left);
         if (dd < d) { d = dd; best = i; }
       });
       return best;
@@ -65,14 +65,15 @@
     function update() {
       var i = current();
       var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-      if (count) count.textContent = (i + 1) + " / " + slides.length;
+      if (count) count.textContent = (atEnd ? slides.length : i + 1) + " / " + slides.length;
       if (prev) prev.disabled = track.scrollLeft <= 4;
       if (next) next.disabled = atEnd;
     }
 
     function go(d) {
       var i = Math.max(0, Math.min(slides.length - 1, current() + d));
-      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft });
+      var dx = slides[i].getBoundingClientRect().left - track.getBoundingClientRect().left;
+      track.scrollTo({ left: track.scrollLeft + dx });
     }
 
     if (prev) prev.addEventListener("click", function () { go(-1); });

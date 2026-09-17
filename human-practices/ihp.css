@@ -103,6 +103,8 @@
 }
 .ledger tbody tr:hover { background: var(--leaf-50); }
 .ledger__who { font-weight: 650; color: var(--leaf-900); }
+.ledger__who > span { display: block; }
+.ledger__who > span + span { margin-top: .45rem; }
 .ledger__who small { display: block; font-weight: 400; color: var(--gray-500); font-size: var(--text-xs); margin-top: .15rem; }
 .ledger__area { white-space: nowrap; font-weight: 650; color: var(--gray-700); }
 
@@ -269,7 +271,7 @@
 /* -------------------------------------------------------------- SPLIT -- */
 
 .split { display: grid; gap: var(--sp-5); margin: var(--sp-5) 0; align-items: start; }
-@media (min-width: 62rem) { .split { grid-template-columns: minmax(0, 76ch) minmax(0, 1fr); gap: var(--sp-7); } }
+@media (min-width: 62rem) { .split { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--sp-6); } }
 .split > .fig { margin: 0; }
 .split p:first-child { margin-top: 0; }
 
@@ -333,7 +335,7 @@
 .kap__seg--tiny { padding: 0; }
 .kap__seg--tiny span { display: none; }
 .kap__seg:hover, .kap__seg:focus-visible { outline: 2px solid var(--black); outline-offset: 1px; z-index: 1; }
-.kap__key { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin: var(--sp-3) 0 0; padding: 0; list-style: none; font-size: var(--text-xs); color: var(--gray-600); }
+.kap__key { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; padding: 0; list-style: none; font-size: var(--text-xs); color: var(--gray-600); }
 .kap__key i { display: inline-block; width: .8rem; height: .8rem; margin-right: .35rem; vertical-align: -.1rem; }
 .kap__key .k1 { background: var(--leaf-900); }
 .kap__key .k2 { background: var(--leaf-500); }
